@@ -1,4 +1,4 @@
-atSoundtrack
+AtSoundtrack
 ==============
 
 Plugin that provides @soundtrack based on iTunes. This plugin works only if you use a Mac.
@@ -14,6 +14,13 @@ Add the following code:
  *  @soundtrack ${soundtrack}
 #end
 ```
+
+Use IntelliJ IDEA with iTunes to generate @soundtrack
+
+![AtSoundtrack](screencast/screencast.gif)
+
+Works also with PhpStorm, WebStorm, PyCharm and RubyMine.
+
 
 License
 -------

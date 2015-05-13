@@ -77,7 +77,7 @@ public class AtSoundtrack implements ApplicationComponent {
 
         private List<SoundTrackProvider> getProviders() {
 
-            return Arrays.asList((SoundTrackProvider) new ITunesOverAppleScript());
+            return Arrays.asList((SoundTrackProvider) new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOAScript());
         }
 
         public String getName() {

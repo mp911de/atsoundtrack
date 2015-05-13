@@ -1,16 +1,15 @@
 <idea-plugin version="2">
     <id>biz.paluch.atsoundtrack</id>
-    <name>atSoundtrack</name>
+    <name>AtSoundtrack</name>
     <version>1.0</version>
     <vendor email="mpaluch@paluch.biz" url="http://www.paluch.biz">mp911de</vendor>
 
     <description><![CDATA[
-    <h1>atSoundtrack</h1>
+    <h1>AtSoundtrack</h1>
      <br/>
 
       <a href="https://github.com/mp911de/atsoundtrack">GitHub</a> |
       <a href="https://github.com/mp911de/atsoundtrack/issues">Issues</a>
-
 
       <p>Plugin that provides @soundtrack based on iTunes. This plugin works only if you use a Mac.
       @soundtrack can be used either with code completion or as variable in the file templates.
