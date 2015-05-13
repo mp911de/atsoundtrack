@@ -1,0 +1,44 @@
+<idea-plugin version="2">
+    <id>biz.paluch.atsoundtrack</id>
+    <name>Plugin display name here</name>
+    <version>1.0</version>
+    <vendor email="mpaluch@paluch.biz" url="http://www.yourcompany.com">YourCompany</vendor>
+
+    <description><![CDATA[
+      <p>Plugin that provides @soundtrack based on iTunes. This plugin works only if you use a Mac.
+      @soundtrack can be used either with code completion or as variable in the file templates.
+      </p>
+      <p>To setup @soundtrack in your templates: Open <em>Preferences</em> go to <em>Editor</em> -&gt; <em>File and Code Templates</em> -&gt; <em>Includes</em> and select "File Header"
+      <br/>
+      Add the following code:
+      <pre><code>
+#if (${soundtrack} && ${soundtrack} != "")
+ *  @soundtrack ${soundtrack}
+#end
+</code></pre>
+
+    ]]></description>
+
+    <change-notes><![CDATA[
+      Initial release.
+    ]]>
+    </change-notes>
+
+    <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
+    <idea-version since-build="131"/>
+
+    <depends>com.intellij.modules.lang</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <defaultTemplatePropertiesProvider
+                implementation="biz.paluch.atsoundtrack.PropertyProvider"/>
+        <completion.contributor language="any" implementationClass="biz.paluch.atsoundtrack.AtSoundtrackContributor"/>
+    </extensions>
+
+    <application-components>
+        <component>
+            <implementation-class>biz.paluch.atsoundtrack.AtSoundtrack</implementation-class>
+        </component>
+    </application-components>
+
+</idea-plugin>
