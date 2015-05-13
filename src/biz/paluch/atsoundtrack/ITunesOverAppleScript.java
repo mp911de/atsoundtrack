@@ -2,7 +2,6 @@ package biz.paluch.atsoundtrack;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
-import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 /**
@@ -12,11 +11,20 @@ import javax.script.ScriptException;
 public class ITunesOverAppleScript implements SoundTrackProvider {
 
     private ScriptEngine scriptEngine;
-    private ScriptEngineManager manager = new ScriptEngineManager();
+    private Class<ScriptEngineFactory> factoryClass;
+
+    public ITunesOverAppleScript() {
+
+        try {
+            factoryClass = (Class) Class.forName("apple.applescript.AppleScriptEngineFactory");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public boolean isApplicable() {
-        return getScriptEngine() != null;
+        return factoryClass != null;
     }
 
     private ScriptEngine getScriptEngine() {
@@ -29,14 +37,16 @@ public class ITunesOverAppleScript implements SoundTrackProvider {
 
     private ScriptEngine getAppleScriptEngine() {
 
-        for (ScriptEngineFactory factory : manager.getEngineFactories()) {
-
-            if (factory.getEngineName().contains("AppleScript")) {
-                return factory.getScriptEngine();
+        if (factoryClass != null) {
+            if (scriptEngine == null) {
+                try {
+                    scriptEngine = factoryClass.newInstance().getScriptEngine();
+                } catch (Exception e) {
+                    throw new IllegalStateException(e);
+                }
             }
         }
-
-        return null;
+        return scriptEngine;
     }
 
     @Override
