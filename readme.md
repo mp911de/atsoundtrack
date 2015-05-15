@@ -5,8 +5,25 @@ Plugin that provides @soundtrack based on iTunes. This plugin works only if you 
 @soundtrack can be used either with code completion or as variable in the file templates.
 
 
-To setup @soundtrack in your templates: Open **Preferences** go to **Editor** -> **File and Code Templates** -> **Includes** and select "File Header"
+Example
+----------
 
+```java
+/**
+ * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @soundtrack DJ Outrance - Best of Trance 2013
+ */
+@Path("import")
+public class ImportsResource {
+   ...
+}
+````
+
+Setup
+----------
+
+1. Download the IntelliJ IDEA plugin from https://plugins.jetbrains.com/plugin/7783 (or your favorite IDE).
+2. To setup @soundtrack in your templates: Open **Preferences** go to **Editor** -> **File and Code Templates** -> **Includes** and select "File Header". 
 Add the following code:
 
 ```
@@ -15,7 +32,7 @@ Add the following code:
 #end
 ```
 
-Use IntelliJ IDEA with iTunes to generate @soundtrack
+3. Use IntelliJ IDEA with iTunes to generate @soundtrack
 
 ![AtSoundtrack](screencast/screencast.gif)
 
