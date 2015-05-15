@@ -24,15 +24,15 @@ Setup
 
 1. Download the IntelliJ IDEA plugin from https://plugins.jetbrains.com/plugin/7783 (or your favorite IDE).
 2. To setup @soundtrack in your templates: Open **Preferences** go to **Editor** -> **File and Code Templates** -> **Includes** and select "File Header". 
-Add the following code:
 
+Add the following code:
 ```
 #if (${soundtrack} && ${soundtrack} != "")
  *  @soundtrack ${soundtrack}
 #end
 ```
 
-3. Use IntelliJ IDEA with iTunes to generate @soundtrack
+Finally: Use IntelliJ IDEA with iTunes to generate @soundtrack
 
 ![AtSoundtrack](screencast/screencast.gif)
 
