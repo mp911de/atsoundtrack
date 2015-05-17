@@ -1,10 +1,9 @@
-package biz.paluch.atsoundtrack;
+package biz.paluch.atsoundtrack.itunes;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
-import org.apache.commons.exec.OS;
+import biz.paluch.atsoundtrack.applescript.AppleScriptEngine;
 
 import com.intellij.openapi.diagnostic.Logger;
 
@@ -16,43 +15,20 @@ public class ITunesOverAppleScriptEngine extends AbstractITunesAppleScriptProvid
 
     private static Logger logger = Logger.getInstance(ITunesOverAppleScriptEngine.class);
     private ScriptEngine scriptEngine;
-    private Class<ScriptEngineFactory> factoryClass;
 
     public ITunesOverAppleScriptEngine() {
 
-        if (OS.isFamilyMac()) {
-
-            try {
-                factoryClass = (Class) Class.forName("apple.applescript.AppleScriptEngineFactory");
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
     @Override
     public boolean isApplicable() {
-        return factoryClass != null && isRunning();
+        return AppleScriptEngine.isAvailable() && isRunning();
     }
 
     private ScriptEngine getScriptEngine() {
 
         if (scriptEngine == null) {
-            scriptEngine = getAppleScriptEngine();
-        }
-        return scriptEngine;
-    }
-
-    private ScriptEngine getAppleScriptEngine() {
-
-        if (factoryClass != null) {
-            if (scriptEngine == null) {
-                try {
-                    scriptEngine = factoryClass.newInstance().getScriptEngine();
-                } catch (Exception e) {
-                    throw new IllegalStateException(e);
-                }
-            }
+            scriptEngine = AppleScriptEngine.createScriptEngine();
         }
         return scriptEngine;
     }

@@ -1,6 +1,8 @@
-package biz.paluch.atsoundtrack;
+package biz.paluch.atsoundtrack.itunes;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
+
+import biz.paluch.atsoundtrack.SoundTrackProvider;
 
 /**
  * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
