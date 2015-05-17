@@ -16,7 +16,6 @@ public class SpotifyOverAppleScriptEngine extends AbstractSpotifyAppleScriptProv
 
     private static Logger logger = Logger.getInstance(SpotifyOverAppleScriptEngine.class);
     private ScriptEngine scriptEngine;
-    private Class<ScriptEngineFactory> factoryClass;
 
     public SpotifyOverAppleScriptEngine() {
 

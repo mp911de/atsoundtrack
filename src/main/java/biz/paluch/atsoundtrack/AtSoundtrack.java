@@ -13,6 +13,7 @@ import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptOSAScript;
 
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.diagnostic.Logger;
 
 /**
  * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
@@ -51,6 +52,7 @@ public class AtSoundtrack implements ApplicationComponent {
 
     private static class BackgroundTrackGathering implements Runnable {
 
+        private static Logger logger = Logger.getInstance(BackgroundTrackGathering.class);
         private AtomicReference<String> name = new AtomicReference<String>("");
         private AtomicBoolean atomicBoolean = new AtomicBoolean(true);
 
@@ -61,15 +63,22 @@ public class AtSoundtrack implements ApplicationComponent {
 
             while (atomicBoolean.get()) {
 
+                boolean found = false;
                 try {
                     for (SoundTrackProvider provider : providers) {
                         if (provider.isApplicable()) {
                             name.set(provider.getName());
+                            found = true;
                             break;
                         }
                     }
+
                 } catch (RuntimeException e) {
-                    e.printStackTrace();
+                    logger.warn(e);
+                }
+
+                if (!found) {
+                    name.set("");
                 }
 
                 try {
