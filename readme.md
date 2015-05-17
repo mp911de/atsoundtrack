@@ -1,7 +1,7 @@
 AtSoundtrack
 ==============
 
-Plugin that provides @soundtrack based on iTunes. This plugin works only if you use a Mac.
+Plugin that provides @soundtrack based on iTunes or Spotify. This plugin works only if you use a Mac.
 @soundtrack can be used either with code completion or as variable in the file templates.
 
 
@@ -32,7 +32,7 @@ Add the following code:
 #end
 ```
 
-Finally: Use IntelliJ IDEA with iTunes to generate @soundtrack
+Finally: Use IntelliJ IDEA with [iTunes](https://www.apple.com/itunes/) or [Spotify](https://spotify.com) to generate @soundtrack
 
 ![AtSoundtrack](screencast/screencast.gif)
 
