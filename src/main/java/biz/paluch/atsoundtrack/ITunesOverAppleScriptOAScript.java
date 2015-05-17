@@ -22,13 +22,18 @@ public class ITunesOverAppleScriptOAScript extends AbstractITunesAppleScriptProv
     public ITunesOverAppleScriptOAScript() {
 
         if (OS.isFamilyMac()) {
-            applicable = true;
+
+            String result = eval("true");
+            if ("true".equals(result)) {
+                applicable = true;
+            }
+
         }
     }
 
     @Override
     public boolean isApplicable() {
-        return applicable;
+        return applicable && isRunning();
     }
 
     protected String eval(String code) {

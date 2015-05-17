@@ -32,7 +32,7 @@ public class ITunesOverAppleScriptEngine extends AbstractITunesAppleScriptProvid
 
     @Override
     public boolean isApplicable() {
-        return factoryClass != null;
+        return factoryClass != null && isRunning();
     }
 
     private ScriptEngine getScriptEngine() {

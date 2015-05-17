@@ -10,14 +10,7 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
 
     public String getName() {
 
-        String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"iTunes\"");
-
-        if ("false".equals("" + isRunning) || "0".equals("" + isRunning)) {
-            return null;
-        }
-
-        String playerState = "" + eval("tell application \"iTunes\" to get player state as string");
-        if (!"playing".equals(playerState)) {
+        if (!isRunning()) {
             return null;
         }
 
@@ -53,6 +46,20 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
         }
 
         return null;
+    }
+
+    protected boolean isRunning() {
+        String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"iTunes\"");
+
+        if ("false".equals("" + isRunning) || "0".equals("" + isRunning)) {
+            return false;
+        }
+
+        String playerState = "" + eval("tell application \"iTunes\" to get player state as string");
+        if (!"playing".equals(playerState)) {
+            return false;
+        }
+        return true;
     }
 
     protected abstract String eval(String code);

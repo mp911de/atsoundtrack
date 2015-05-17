@@ -17,7 +17,6 @@ import com.intellij.psi.xml.XmlToken;
  */
 public class AtSoundtrackContributor extends CompletionContributor {
 
-    @Override
     public void fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
 
         String prefix = parameters.getOriginalPosition().getText();
