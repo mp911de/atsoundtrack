@@ -7,6 +7,11 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import org.jetbrains.annotations.NotNull;
 
+import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptEngine;
+import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptOSAScript;
+import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptEngine;
+import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptOSAScript;
+
 import com.intellij.openapi.components.ApplicationComponent;
 
 /**
@@ -77,7 +82,8 @@ public class AtSoundtrack implements ApplicationComponent {
 
         private List<SoundTrackProvider> getProviders() {
 
-            return Arrays.asList((SoundTrackProvider) new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOAScript());
+            return Arrays.asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(),
+                    new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
         }
 
         public String getName() {
