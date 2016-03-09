@@ -19,9 +19,12 @@ public class AtSoundtrackContributor extends CompletionContributor {
 
     public void fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
 
-        String prefix = parameters.getOriginalPosition().getText();
+        String prefix = null;
+        if(parameters != null && parameters.getOriginalPosition() != null){
+            prefix = parameters.getOriginalPosition().getText();
+        }
 
-        if (!prefix.contains("soundtrack")) {
+        if (prefix != null && !prefix.contains("soundtrack")) {
 
             if (!isEmpty(AtSoundtrack.getName())) {
 
