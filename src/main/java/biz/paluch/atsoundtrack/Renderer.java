@@ -25,7 +25,7 @@ import biz.paluch.atsoundtrack.settings.Parentheses;
 /**
  * Soundtrack renderer.
  * 
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public class Renderer {
 

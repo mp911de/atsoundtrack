@@ -19,7 +19,7 @@ package biz.paluch.atsoundtrack.settings;
 import lombok.Data;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 @Data
 public class TextComponent implements AtSoundtrackTextComponent{

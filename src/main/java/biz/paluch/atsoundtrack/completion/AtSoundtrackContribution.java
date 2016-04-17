@@ -21,7 +21,7 @@ import lombok.Data;
 /**
  * Contribution configuration.
  * 
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 @Data
 public class AtSoundtrackContribution {

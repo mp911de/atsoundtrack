@@ -36,7 +36,7 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 
 /**
  * Settings for AtSoundtrack
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 @State(name = "AtSoundtrackSettings", storages = {
         @Storage(id = "AtSoundtrackSettings", file = "$APP_CONFIG$/atsoundtrack.xml") })

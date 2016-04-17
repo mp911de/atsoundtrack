@@ -18,7 +18,7 @@ package biz.paluch.atsoundtrack;
 
 /**
  * Soundtrack elements.
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public enum AtSoundtrackElement {
 

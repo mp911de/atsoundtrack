@@ -17,7 +17,7 @@
 package biz.paluch.atsoundtrack.settings;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public enum Field {
 	ARTIST, TITLE;

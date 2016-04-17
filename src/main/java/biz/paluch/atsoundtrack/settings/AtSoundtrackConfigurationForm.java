@@ -27,7 +27,7 @@ import com.intellij.openapi.options.Configurable;
 import com.intellij.ui.DocumentAdapter;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
 

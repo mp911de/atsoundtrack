@@ -26,7 +26,7 @@ import org.jetbrains.annotations.PropertyKey;
 import com.intellij.CommonBundle;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public class Messages {
 

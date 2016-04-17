@@ -25,7 +25,7 @@ import com.intellij.patterns.PsiElementPattern;
 import com.intellij.psi.PsiElement;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  * @since 13.05.15 11:49
  */
 public class AtSoundtrackContributor extends CompletionContributor {

@@ -37,7 +37,7 @@ import com.intellij.util.ProcessingContext;
  * Completion provider for the various languages. Avoid static dependencies to language plugins so this plugin can be used
  * across the different Jetbrains products.
  * 
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 public class AtSoundtrackCompletionProvider extends CompletionProvider<CompletionParameters> {
 

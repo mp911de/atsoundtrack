@@ -20,7 +20,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
+ * @author Mark Paluch
  */
 @Data
 @RequiredArgsConstructor
