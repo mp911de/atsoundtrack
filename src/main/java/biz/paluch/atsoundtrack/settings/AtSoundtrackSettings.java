@@ -49,7 +49,7 @@ public class AtSoundtrackSettings
     private long sleepMs = 1000L;
     private boolean iTunes = true;
     private boolean spotify = true;
-    private boolean preferScriptEngine = true;
+    private boolean preferScriptEngine = false;
     private Map<AtSoundtrackElement, Parentheses> parentheses = new HashMap<AtSoundtrackElement, Parentheses>();
     private String content = "${title} - ${artist}";
 
