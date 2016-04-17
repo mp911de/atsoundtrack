@@ -2,6 +2,11 @@ package biz.paluch.atsoundtrack.spotify;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import biz.paluch.atsoundtrack.SoundTrackProvider;
 
 /**
@@ -10,34 +15,34 @@ import biz.paluch.atsoundtrack.SoundTrackProvider;
  */
 public abstract class AbstractSpotifyAppleScriptProvider implements SoundTrackProvider {
 
-    public String getName() {
+    @Override
+    public Map<AtSoundtrackElement, String> getSoundtrack() {
 
         if (!isRunning()) {
-            return null;
+            return Collections.emptyMap();
         }
 
-        String trackName = "" + eval("tell application \"Spotify\"\n" + "get name of current track\n" + "end tell");
+        Map<AtSoundtrackElement, String> names = new HashMap<AtSoundtrackElement, String>();
+        String title = "" + eval("tell application \"Spotify\"\n" + "get name of current track\n" + "end tell");
+        String artist = "" + eval("tell application \"Spotify\"\n" + "get artist of current track\n" + "end tell");
 
-        String artistName = "" + eval("tell application \"Spotify\"\n" + "get artist of current track\n" + "end tell");
-
-        if ("null".equals(trackName)) {
-            trackName = null;
+        if ("null".equals(title)) {
+            title = null;
         }
 
-        if ("null".equals(artistName)) {
-            artistName = null;
+        if ("null".equals(artist)) {
+            artist = null;
         }
 
-        if (!isEmpty(trackName)) {
-
-            if (!isEmpty(artistName)) {
-                return artistName + " - " + trackName;
-            } else {
-                return trackName;
-            }
+        if (!isEmpty(title)) {
+            names.put(AtSoundtrackElement.TITLE, title);
         }
 
-        return null;
+        if (!isEmpty(artist)) {
+            names.put(AtSoundtrackElement.ARTIST, artist);
+        }
+
+        return names;
     }
 
     protected boolean isRunning() {

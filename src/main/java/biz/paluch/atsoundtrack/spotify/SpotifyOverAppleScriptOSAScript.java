@@ -2,6 +2,7 @@ package biz.paluch.atsoundtrack.spotify;
 
 import biz.paluch.atsoundtrack.applescript.OSAScript;
 
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
@@ -17,8 +18,8 @@ public class SpotifyOverAppleScriptOSAScript extends AbstractSpotifyAppleScriptP
     }
 
     @Override
-    public boolean isApplicable() {
-        return OSAScript.isAvailable() && isRunning();
+    public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
+        return atSoundtrackSettings.isSpotify() && OSAScript.isAvailable() && isRunning();
     }
 
     protected String eval(String code) {

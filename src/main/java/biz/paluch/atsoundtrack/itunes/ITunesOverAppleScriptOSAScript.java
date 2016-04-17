@@ -1,6 +1,7 @@
 package biz.paluch.atsoundtrack.itunes;
 
 import biz.paluch.atsoundtrack.applescript.OSAScript;
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
 /**
  * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
@@ -13,8 +14,8 @@ public class ITunesOverAppleScriptOSAScript extends AbstractITunesAppleScriptPro
     }
 
     @Override
-    public boolean isApplicable() {
-        return OSAScript.isAvailable() && isRunning();
+    public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
+        return atSoundtrackSettings.isITunes() && OSAScript.isAvailable() && isRunning();
     }
 
     protected String eval(String code) {

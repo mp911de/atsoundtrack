@@ -1,11 +1,11 @@
 package biz.paluch.atsoundtrack.spotify;
 
 import javax.script.ScriptEngine;
-import javax.script.ScriptEngineFactory;
 import javax.script.ScriptException;
 
 import biz.paluch.atsoundtrack.applescript.AppleScriptEngine;
 
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
@@ -22,8 +22,8 @@ public class SpotifyOverAppleScriptEngine extends AbstractSpotifyAppleScriptProv
     }
 
     @Override
-    public boolean isApplicable() {
-        return AppleScriptEngine.isAvailable() && isRunning();
+    public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
+        return atSoundtrackSettings.isSpotify() && AppleScriptEngine.isAvailable() && isRunning();
     }
 
     private ScriptEngine getScriptEngine() {

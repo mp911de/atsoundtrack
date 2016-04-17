@@ -2,6 +2,11 @@ package biz.paluch.atsoundtrack.itunes;
 
 import static com.intellij.openapi.util.text.StringUtil.*;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import biz.paluch.atsoundtrack.SoundTrackProvider;
 
 /**
@@ -10,44 +15,49 @@ import biz.paluch.atsoundtrack.SoundTrackProvider;
  */
 public abstract class AbstractITunesAppleScriptProvider implements SoundTrackProvider {
 
-    public String getName() {
 
+    @Override
+    public Map<AtSoundtrackElement, String> getSoundtrack() {
+        
         if (!isRunning()) {
-            return null;
+            return Collections.emptyMap();
         }
 
+        Map<AtSoundtrackElement, String> names = new HashMap<AtSoundtrackElement, String>();
+        
         String streamTitle = "" + eval("tell application \"iTunes\" to get current stream title");
         if (!streamTitle.contains("NSAppleEventDescriptor") && !streamTitle.contains("''msng''")
                 && !streamTitle.equals("missing value")) {
-            return streamTitle;
+
+            names.put(AtSoundtrackElement.STREAM_TITLE, streamTitle);
         }
 
-        String trackName = ""
+        String title = ""
                 + eval("tell application \"iTunes\"\n" + "\tif exists name of current track then\n"
                         + "\t\tget name of current track\n" + "\tend if\n" + "end tell");
 
-        String artistName = ""
+        String artist = ""
                 + eval("tell application \"iTunes\"\n" + "\tif exists artist of current track then\n"
                         + "\t\tget artist of current track\n" + "\tend if\n" + "end tell");
 
-        if ("null".equals(trackName)) {
-            trackName = null;
+        if ("null".equals(title)) {
+            title = null;
         }
 
-        if ("null".equals(artistName)) {
-            artistName = null;
+        if ("null".equals(artist)) {
+            artist = null;
         }
 
-        if (!isEmpty(trackName)) {
+        if (!isEmpty(title)) {
+            names.put(AtSoundtrackElement.TITLE, title);
 
-            if (!isEmpty(artistName)) {
-                return artistName + " - " + trackName;
-            } else {
-                return trackName;
-            }
+        }
+        if (!isEmpty(artist)) {
+            names.put(AtSoundtrackElement.ARTIST, artist);
+
         }
 
-        return null;
+        return names;
     }
 
     protected boolean isRunning() {

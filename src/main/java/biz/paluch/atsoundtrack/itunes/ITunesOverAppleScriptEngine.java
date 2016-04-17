@@ -5,6 +5,7 @@ import javax.script.ScriptException;
 
 import biz.paluch.atsoundtrack.applescript.AppleScriptEngine;
 
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
@@ -21,8 +22,8 @@ public class ITunesOverAppleScriptEngine extends AbstractITunesAppleScriptProvid
     }
 
     @Override
-    public boolean isApplicable() {
-        return AppleScriptEngine.isAvailable() && isRunning();
+    public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
+        return atSoundtrackSettings.isITunes() && AppleScriptEngine.isAvailable() && isRunning();
     }
 
     private ScriptEngine getScriptEngine() {

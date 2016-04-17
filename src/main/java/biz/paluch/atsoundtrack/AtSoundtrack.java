@@ -1,7 +1,6 @@
 package biz.paluch.atsoundtrack;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -9,6 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptOSAScript;
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptOSAScript;
 
@@ -21,24 +21,27 @@ import com.intellij.openapi.diagnostic.Logger;
  */
 public class AtSoundtrack implements ApplicationComponent {
 
-    private static Thread backgroundTrackGathering;
-    private static BackgroundTrackGathering runnable;
+    private static Thread atSoundtrackThread;
+    private static AtSoundtrackThread runnable;
+    private AtSoundtrackSettings atSoundtrackSettings;
 
-    public static String getName() {
+    public static Map<AtSoundtrackElement, String> getSoundtrack() {
         if (runnable != null) {
-            return runnable.getName();
+            return runnable.getSoundtrack();
         }
-        return null;
+        return Collections.emptyMap();
     }
 
     public AtSoundtrack() {
     }
 
     public void initComponent() {
-        runnable = new BackgroundTrackGathering();
-        backgroundTrackGathering = new Thread(runnable, "backgroundTrackGathering");
-        backgroundTrackGathering.setDaemon(true);
-        backgroundTrackGathering.start();
+
+        atSoundtrackSettings = AtSoundtrackSettings.getInstance();
+        runnable = new AtSoundtrackThread(atSoundtrackSettings);
+        atSoundtrackThread = new Thread(runnable, "AtSoundtrackThread");
+        atSoundtrackThread.setDaemon(true);
+        atSoundtrackThread.start();
     }
 
     public void disposeComponent() {
@@ -50,11 +53,18 @@ public class AtSoundtrack implements ApplicationComponent {
         return "AtSoundtrack";
     }
 
-    private static class BackgroundTrackGathering implements Runnable {
+    private static class AtSoundtrackThread implements Runnable {
 
-        private static Logger logger = Logger.getInstance(BackgroundTrackGathering.class);
-        private AtomicReference<String> name = new AtomicReference<String>("");
+        private static Logger logger = Logger.getInstance(AtSoundtrackThread.class);
+        private final AtSoundtrackSettings atSoundtrackSettings;
+        private AtomicReference<Map<AtSoundtrackElement, String>> soundtrack = new AtomicReference<Map<AtSoundtrackElement, String>>(
+                new HashMap<AtSoundtrackElement, String>());
         private AtomicBoolean atomicBoolean = new AtomicBoolean(true);
+
+        public AtSoundtrackThread(AtSoundtrackSettings atSoundtrackSettings) {
+
+            this.atSoundtrackSettings = atSoundtrackSettings;
+        }
 
         @Override
         public void run() {
@@ -66,8 +76,8 @@ public class AtSoundtrack implements ApplicationComponent {
                 boolean found = false;
                 try {
                     for (SoundTrackProvider provider : providers) {
-                        if (provider.isApplicable()) {
-                            name.set(provider.getName());
+                        if (provider.isApplicable(atSoundtrackSettings)) {
+                            soundtrack.set(provider.getSoundtrack());
                             found = true;
                             break;
                         }
@@ -78,11 +88,11 @@ public class AtSoundtrack implements ApplicationComponent {
                 }
 
                 if (!found) {
-                    name.set("");
+                    soundtrack.set(new HashMap<AtSoundtrackElement, String>());
                 }
 
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(atSoundtrackSettings.getSleepMs());
                 } catch (InterruptedException e) {
                     return;
                 }
@@ -91,12 +101,17 @@ public class AtSoundtrack implements ApplicationComponent {
 
         private List<SoundTrackProvider> getProviders() {
 
-            return Arrays.asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(),
-                    new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
+            if (atSoundtrackSettings.isPreferScriptEngine()) {
+                return Arrays.asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(),
+                        new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
+
+            }
+
+            return Arrays.asList(new ITunesOverAppleScriptOSAScript(), new SpotifyOverAppleScriptOSAScript());
         }
 
-        public String getName() {
-            return name.get();
+        public Map<AtSoundtrackElement, String> getSoundtrack() {
+            return soundtrack.get();
         }
 
         public void stop() {

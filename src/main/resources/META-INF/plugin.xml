@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>biz.paluch.atsoundtrack</id>
     <name>AtSoundtrack</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <vendor email="mpaluch@paluch.biz" url="http://www.paluch.biz">mp911de</vendor>
 
     <description><![CDATA[
@@ -11,7 +11,7 @@
       <a href="https://github.com/mp911de/atsoundtrack">GitHub</a> |
       <a href="https://github.com/mp911de/atsoundtrack/issues">Issues</a>
 
-      <p>Plugin that provides @soundtrack based on iTunes. This plugin works only if you use a Mac.
+      <p>Plugin that provides @soundtrack using iTunes and Spotify. This plugin works only if you use a Mac.
       @soundtrack can be used either with code completion or as variable in the file templates.
       </p>
       <p>To setup @soundtrack in your templates: Open <strong>Preferences</strong> go to <strong>Editor</strong> -&gt; <strong>File and Code Templates</strong> -&gt; <strong>Includes</strong> and select "File Header"
@@ -22,26 +22,49 @@
  *  @soundtrack ${soundtrack}
 #end
 </code></pre>
+<h2>Language support</h2>
+<ul>
+<li>CoffeeScript</li>
+<li>CSS</li>
+<li>HTML</li>
+<li>Java</li>
+<li>JavaScript</li>
+<li>Kotlin</li>
+<li>PHP</li>
+<li>Python</li>
+<li>Ruby</li>
+<li>Scala (and ScalaScript)</li>
+<li>SQL</li>
+<li>XML</li>
+</ul>
 
 
-<i>Compiled with Java 1.6</i>
+<i>Compiled with Java 1.8</i>
     ]]></description>
 
     <change-notes><![CDATA[
+      <p><strong>Version 1.2</strong> Added Configuration settings below <strong>Preferences/Editor/AtSoundtrack</strong>. Extended language support. Code completion is less greedy and more fun to use.</p>
       <p><strong>Version 1.1</strong> Support Spotify on MacOS X.</p>
       <p><strong>Version 1.0</strong> Initial release.</p>
     ]]>
     </change-notes>
 
     <!-- please see https://confluence.jetbrains.com/display/IDEADEV/Build+Number+Ranges for description -->
-    <idea-version since-build="131"/>
+    <idea-version since-build="143"/>
 
     <depends>com.intellij.modules.lang</depends>
+
+    <application-components>
+		<component>
+			<implementation-class>biz.paluch.atsoundtrack.settings.AtSoundtrackSettings</implementation-class>
+		</component>
+	</application-components>
 
     <extensions defaultExtensionNs="com.intellij">
         <defaultTemplatePropertiesProvider
                 implementation="biz.paluch.atsoundtrack.PropertyProvider"/>
-        <completion.contributor language="any" implementationClass="biz.paluch.atsoundtrack.AtSoundtrackContributor"/>
+        <completion.contributor language="any" implementationClass="biz.paluch.atsoundtrack.completion.AtSoundtrackContributor"/>
+        <applicationConfigurable groupId="editor" instance="biz.paluch.atsoundtrack.settings.AtSoundtrackConfigurable" />
     </extensions>
 
     <application-components>
