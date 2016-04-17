@@ -29,7 +29,7 @@ public class AtSoundtrackContribution {
     private boolean prefixRequired;
     private boolean shouldContribute = false;
     private boolean displayPrefixCharIfPrefixFound = true;
-    private char prefixChar = ':';
+    private char prefixChar = '@';
 
     public void enableContribution() {
         shouldContribute = true;

@@ -20,9 +20,6 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import lombok.Getter;
-
-import org.apache.commons.lang.StringUtils;
-
 import biz.paluch.atsoundtrack.AtSoundtrack;
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
 
@@ -115,7 +112,7 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
 
         String renderedSoundtrack = biz.paluch.atsoundtrack.Renderer.render(AtSoundtrack.getSoundtrack(), workingset);
 
-        if (StringUtils.isNotBlank(renderedSoundtrack)) {
+        if (!renderedSoundtrack.trim().isEmpty()) {
             example.setText(String.format("@soundtrack %s", renderedSoundtrack));
         } else {
             example.setText("Cannot provide @soundtrack");

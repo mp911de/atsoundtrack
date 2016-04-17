@@ -19,8 +19,6 @@ package biz.paluch.atsoundtrack;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
-
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import biz.paluch.atsoundtrack.settings.Parentheses;
 
@@ -83,7 +81,7 @@ public class Renderer {
         }
         String content = map.get(element).trim();
 
-        if (StringUtils.isNotBlank(content)) {
+        if (content != null && !content.trim().isEmpty()) {
             if (settings.getParentheses().containsKey(element)) {
                 Parentheses parentheses = settings.getParentheses().get(element);
 

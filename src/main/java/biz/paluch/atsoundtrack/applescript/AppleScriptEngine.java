@@ -3,8 +3,6 @@ package biz.paluch.atsoundtrack.applescript;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineFactory;
 
-import org.apache.commons.exec.OS;
-
 import com.intellij.openapi.diagnostic.Logger;
 
 /**
@@ -16,7 +14,7 @@ public class AppleScriptEngine {
     private static Class<ScriptEngineFactory> factoryClass;
 
     static {
-        if (OS.isFamilyMac()) {
+        if (OSAScript.IS_MAC) {
             try {
                 factoryClass = (Class) Class.forName("apple.applescript.AppleScriptEngineFactory");
             } catch (ClassNotFoundException e) {
@@ -50,6 +48,5 @@ public class AppleScriptEngine {
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
-
     }
 }

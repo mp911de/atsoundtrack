@@ -16,7 +16,6 @@
 
 package biz.paluch.atsoundtrack.completion;
 
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import biz.paluch.atsoundtrack.AtSoundtrack;
@@ -35,6 +34,9 @@ import com.intellij.psi.xml.XmlToken;
 import com.intellij.util.ProcessingContext;
 
 /**
+ * Completion provider for the various languages. Avoid static dependencies to language plugins so this plugin can be used
+ * across the different Jetbrains products.
+ * 
  * @author <a href="mailto:mpaluch@paluch.biz">Mark Paluch</a>
  */
 public class AtSoundtrackCompletionProvider extends CompletionProvider<CompletionParameters> {
@@ -48,7 +50,7 @@ public class AtSoundtrackCompletionProvider extends CompletionProvider<Completio
 
         PsiElement origPosition = completionParameters.getOriginalPosition();
 
-        if (origPosition == null || StringUtils.isBlank(name) || origPosition.getLanguage() == null) {
+        if (origPosition == null || name.trim().isEmpty() || origPosition.getLanguage() == null) {
             return;
         }
 
@@ -155,7 +157,6 @@ public class AtSoundtrackCompletionProvider extends CompletionProvider<Completio
 
         if (languageId.equalsIgnoreCase("Kotlin")) {
 
-            // Kotlin /* .. */
             if (contextString.contains("KDoc") || origPositionString.contains("KDOC_TEXT")) {
                 contribution.enableContribution();
             }

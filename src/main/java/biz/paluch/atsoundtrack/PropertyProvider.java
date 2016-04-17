@@ -2,8 +2,6 @@ package biz.paluch.atsoundtrack;
 
 import java.util.Properties;
 
-import org.apache.commons.lang.StringUtils;
-
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
 import com.intellij.ide.fileTemplates.DefaultTemplatePropertiesProvider;
@@ -23,7 +21,7 @@ public class PropertyProvider implements DefaultTemplatePropertiesProvider {
     public void fillProperties(PsiDirectory psiDirectory, Properties properties) {
 
         String name = Renderer.render(AtSoundtrack.getSoundtrack(), settings);
-        if (StringUtils.isNotBlank(name)) {
+        if (!name.trim().isEmpty()) {
             properties.put("soundtrack", name);
         } else {
             properties.put("soundtrack", "");

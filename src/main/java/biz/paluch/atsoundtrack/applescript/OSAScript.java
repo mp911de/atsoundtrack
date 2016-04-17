@@ -4,8 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
-import org.apache.commons.exec.OS;
+import java.util.Locale;
 
 import com.intellij.openapi.diagnostic.Logger;
 
@@ -14,13 +13,21 @@ import com.intellij.openapi.diagnostic.Logger;
  * @soundtrack Tranceformation Rewired by Diverted 116 (May 2015) - Ciacomix, Thomas Coastline
  */
 public class OSAScript {
+
+    public final static boolean IS_MAC;
+
     private static Logger logger = Logger.getInstance(OSAScript.class);
     private static final int EOF = -1;
     private static final boolean available;
+    private static final String OS_NAME = System.getProperty("os.name").toLowerCase(Locale.US);
+
 
     static {
+
+        IS_MAC = OS_NAME.indexOf("mac os x") > -1;
+
         boolean check = false;
-        if (OS.isFamilyMac()) {
+        if (IS_MAC) {
             String result = eval("true");
             if ("true".equals(result)) {
                 check = true;
