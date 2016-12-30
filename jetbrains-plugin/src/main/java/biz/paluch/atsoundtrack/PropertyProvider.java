@@ -19,8 +19,8 @@ package biz.paluch.atsoundtrack;
 import java.util.Properties;
 
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
-
 import biz.paluch.atsoundtrack.settings.PluginSettings;
+
 import com.intellij.ide.fileTemplates.DefaultTemplatePropertiesProvider;
 import com.intellij.psi.PsiDirectory;
 

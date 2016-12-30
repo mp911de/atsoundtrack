@@ -17,8 +17,6 @@
 package biz.paluch.atsoundtrack.completion;
 
 import com.intellij.codeInsight.completion.CompletionContributor;
-import com.intellij.codeInsight.completion.CompletionParameters;
-import com.intellij.codeInsight.completion.CompletionResultSet;
 import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.patterns.PsiElementPattern;
@@ -32,52 +30,8 @@ public class AtSoundtrackContributor extends CompletionContributor {
 
     public AtSoundtrackContributor() {
 
-         PsiElementPattern.Capture<PsiElement> pattern =
-                PlatformPatterns.psiElement();
-
+        PsiElementPattern.Capture<PsiElement> pattern = PlatformPatterns.psiElement();
 
         extend(CompletionType.BASIC, pattern, new AtSoundtrackCompletionProvider());
     }
-
-    public void fillCompletionVariants(CompletionParameters parameters, CompletionResultSet result) {
-        /*AtSoundtrackSettings settings = AtSoundtrackSettings.getInstance();
-
-        String prefix = null;
-        if (parameters != null && parameters.getOriginalPosition() != null) {
-            prefix = parameters.getOriginalPosition().getText();
-        }
-
-        if (prefix != null && !prefix.contains("soundtrack")) {
-            String name = Renderer.render(AtSoundtrack.getSoundtrack(), settings);
-            if (!isEmpty(name)) {
-
-                boolean qualified = false;
-                if (parameters.getOriginalPosition() instanceof PsiComment
-                        || parameters.getOriginalPosition().getContext() instanceof PsiDocCommentBase
-                        || parameters.getOriginalPosition().getClass().getName().contains("PsiDocToken")) {
-
-                    qualified = true;
-                }
-                if (parameters.getOriginalPosition() instanceof XmlToken) {
-                    XmlToken xmlToken = (XmlToken) parameters.getOriginalPosition();
-
-                    if (xmlToken instanceof XmlComment || xmlToken.getContext() instanceof XmlComment) {
-                        qualified = true;
-                    }
-                }
-
-                if (qualified) {
-                    if (!prefix.contains("@")) {
-                        result.addElement(LookupElementBuilder.create("@soundtrack " + name));
-                    } else {
-                        result.addElement(LookupElementBuilder.create("soundtrack " + name));
-                    }
-                }
-            }
-        } */
-
-        super.fillCompletionVariants(parameters, result);
-    }
-
-
 }

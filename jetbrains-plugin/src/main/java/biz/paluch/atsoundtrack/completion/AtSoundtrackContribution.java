@@ -41,6 +41,5 @@ public class AtSoundtrackContribution {
 
     public void prefixRequired() {
         prefixRequired = true;
-
     }
 }

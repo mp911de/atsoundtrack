@@ -16,12 +16,12 @@
 
 package biz.paluch.atsoundtrack.completion;
 
-import biz.paluch.atsoundtrack.settings.PluginSettings;
 import org.jetbrains.annotations.NotNull;
 
 import biz.paluch.atsoundtrack.AtSoundtrackComponent;
 import biz.paluch.atsoundtrack.Renderer;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
+import biz.paluch.atsoundtrack.settings.PluginSettings;
 
 import com.intellij.codeInsight.completion.CompletionParameters;
 import com.intellij.codeInsight.completion.CompletionProvider;
@@ -150,9 +150,14 @@ public class AtSoundtrackCompletionProvider extends CompletionProvider<Completio
 
         if (languageId.equalsIgnoreCase("PHP")) {
 
-            if (origPositionString.contains("C style comment") || origPositionString.contains("line comment")) {
+            if (origPositionString.contains("C style comment") || origPositionString.contains("line comment")
+                    || origPositionString.contains("DOC_TEXT") || origPositionString.contains("DOC_TAG_NAME")) {
+
+                if (origPositionString.contains("DOC_TAG_NAME") || origPositionString.contains("DOC_TEXT")) {
+                    contribution.setDisplayPrefixCharIfPrefixFound(false);
+                }
+
                 contribution.enableContribution();
-                contribution.prefixRequired();
             }
         }
 

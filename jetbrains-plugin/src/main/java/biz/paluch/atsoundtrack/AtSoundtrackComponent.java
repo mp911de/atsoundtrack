@@ -34,5 +34,4 @@ public class AtSoundtrackComponent extends AtSoundtrack implements ApplicationCo
         setAtSoundtrackSettings(PluginSettings.getInstance());
         super.initComponent();
     }
-
 }
