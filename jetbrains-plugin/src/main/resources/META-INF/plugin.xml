@@ -43,6 +43,7 @@
     ]]></description>
 
     <change-notes><![CDATA[
+      <p><strong>Version 1.2.1</strong> Fix auto-completion with at-prefix for PhpStorm.</p>
       <p><strong>Version 1.2</strong> Added Configuration settings below <strong>Preferences/Editor/AtSoundtrack</strong>. Extended language support. Code completion is less greedy and more fun to use.</p>
       <p><strong>Version 1.1</strong> Support Spotify on MacOS X.</p>
       <p><strong>Version 1.0</strong> Initial release.</p>
