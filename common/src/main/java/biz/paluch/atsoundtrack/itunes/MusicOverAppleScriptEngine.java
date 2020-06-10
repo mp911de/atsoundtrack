@@ -14,32 +14,34 @@
  * limitations under the License.
  */
 
-package biz.paluch.atsoundtrack.spotify;
+package biz.paluch.atsoundtrack.itunes;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
 import biz.paluch.atsoundtrack.applescript.AppleScriptEngine;
-
+import biz.paluch.atsoundtrack.logging.InternalLogger;
+import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
-import com.intellij.openapi.diagnostic.Logger;
 
 /**
  * @author Mark Paluch
- * @since 17.05.15 21:49
+ * @since 1.3
  */
-public class SpotifyOverAppleScriptEngine extends AbstractSpotifyAppleScriptProvider {
+public class MusicOverAppleScriptEngine extends AbstractITunesAppleScriptProvider {
 
-    private static Logger logger = Logger.getInstance(SpotifyOverAppleScriptEngine.class);
+    private static InternalLogger log = InternalLoggerFactory
+            .getLogger(MusicOverAppleScriptEngine.class);
     private ScriptEngine scriptEngine;
 
-    public SpotifyOverAppleScriptEngine() {
-
+    public MusicOverAppleScriptEngine() {
+        super("Music");
     }
 
     @Override
     public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
-        return atSoundtrackSettings.isSpotify() && AppleScriptEngine.isAvailable() && isRunning();
+        return atSoundtrackSettings.isITunes() && AppleScriptEngine
+                .isAvailable() && isRunning();
     }
 
     private ScriptEngine getScriptEngine() {
@@ -60,7 +62,7 @@ public class SpotifyOverAppleScriptEngine extends AbstractSpotifyAppleScriptProv
             }
             return o.toString();
         } catch (ScriptException e) {
-            logger.warn(e);
+            log.warn(e.getMessage(), e);
             return null;
         }
     }

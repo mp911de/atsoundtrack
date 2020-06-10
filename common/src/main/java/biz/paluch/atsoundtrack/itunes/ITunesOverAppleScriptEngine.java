@@ -35,6 +35,7 @@ public class ITunesOverAppleScriptEngine extends AbstractITunesAppleScriptProvid
 
     public ITunesOverAppleScriptEngine() {
 
+        super("iTunes");
     }
 
     @Override

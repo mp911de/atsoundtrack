@@ -27,6 +27,7 @@ public class ITunesOverAppleScriptOSAScript extends AbstractITunesAppleScriptPro
 
     public ITunesOverAppleScriptOSAScript() {
 
+        super("iTunes");
     }
 
     @Override

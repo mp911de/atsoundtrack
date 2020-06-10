@@ -1,0 +1,5 @@
+rootProject.name = 'atsoundtrack'
+
+include "common"
+include "jetbrains-plugin"
+

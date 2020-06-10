@@ -1,0 +1,15 @@
+plugins {
+	id "org.jetbrains.intellij" version "0.4.21"
+}
+
+description = "AtSoundtrack Jetbrains Plugin"
+apply plugin: 'org.jetbrains.intellij'
+
+intellij {
+	pluginName = "AtSoundtrack"
+	version = ideaVersion
+}
+
+dependencies {
+	implementation project(":common")
+}

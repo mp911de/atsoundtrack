@@ -29,6 +29,12 @@ import biz.paluch.atsoundtrack.SoundTrackProvider;
  */
 public abstract class AbstractITunesAppleScriptProvider implements SoundTrackProvider {
 
+    private final String applicationName;
+
+    protected AbstractITunesAppleScriptProvider(String applicationName) {
+        this.applicationName = applicationName;
+    }
+
     @Override
     public Map<AtSoundtrackElement, String> getSoundtrack() {
 
@@ -38,17 +44,17 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
 
         Map<AtSoundtrackElement, String> names = new HashMap<AtSoundtrackElement, String>();
 
-        String streamTitle = "" + eval("tell application \"iTunes\" to get current stream title");
+        String streamTitle = "" + eval("tell application \"" + applicationName + "\" to get current stream title");
         if (!streamTitle.contains("NSAppleEventDescriptor") && !streamTitle.contains("''msng''")
                 && !streamTitle.equals("missing value")) {
 
             names.put(AtSoundtrackElement.STREAM_TITLE, streamTitle);
         }
 
-        String title = "" + eval("tell application \"iTunes\"\n" + "\tif exists name of current track then\n"
+        String title = "" + eval("tell application \"" + applicationName + "\"\n" + "\tif exists name of current track then\n"
                 + "\t\tget name of current track\n" + "\tend if\n" + "end tell");
 
-        String artist = "" + eval("tell application \"iTunes\"\n" + "\tif exists artist of current track then\n"
+        String artist = "" + eval("tell application \"" + applicationName + "\"\n" + "\tif exists artist of current track then\n"
                 + "\t\tget artist of current track\n" + "\tend if\n" + "end tell");
 
         if ("null".equals(title)) {
@@ -73,13 +79,13 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
     }
 
     protected boolean isRunning() {
-        String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"iTunes\"");
+        String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"" + applicationName + "\"");
 
         if ("false".equals("" + isRunning) || "0".equals("" + isRunning)) {
             return false;
         }
 
-        String playerState = "" + eval("tell application \"iTunes\" to get player state as string");
+        String playerState = "" + eval("tell application \"" + applicationName + "\" to get player state as string");
         if (!"playing".equals(playerState)) {
             return false;
         }

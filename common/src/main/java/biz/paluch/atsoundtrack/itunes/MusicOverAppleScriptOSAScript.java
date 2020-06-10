@@ -21,12 +21,12 @@ import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
 /**
  * @author Mark Paluch
- * @since 13.05.15 11:32
+ * @since 1.3
  */
-public class ITunesOverAppleScriptOSAScript extends AbstractITunesAppleScriptProvider {
+public class MusicOverAppleScriptOSAScript extends AbstractITunesAppleScriptProvider {
 
-    public ITunesOverAppleScriptOSAScript() {
-
+    public MusicOverAppleScriptOSAScript() {
+        super("Music");
     }
 
     @Override

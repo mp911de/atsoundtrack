@@ -1,0 +1,21 @@
+apply plugin: 'idea'
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    group = 'biz.paluch'
+
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+
+    repositories {
+        jcenter()
+        mavenCentral()
+    }
+
+    dependencies {
+
+        testImplementation("junit:junit:4.13")
+        testImplementation("org.assertj:assertj-core:3.16.1")
+    }
+}
