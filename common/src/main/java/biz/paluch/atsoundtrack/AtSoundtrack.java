@@ -16,13 +16,18 @@
 
 package biz.paluch.atsoundtrack;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
-import lombok.Setter;
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptOSAScript;
+import biz.paluch.atsoundtrack.itunes.MusicOverAppleScriptEngine;
+import biz.paluch.atsoundtrack.itunes.MusicOverAppleScriptOSAScript;
 import biz.paluch.atsoundtrack.logging.InternalLogger;
 import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
@@ -38,7 +43,7 @@ public class AtSoundtrack {
     private final static InternalLogger log = InternalLoggerFactory.getLogger(AtSoundtrack.class);
     private static Thread atSoundtrackThread;
     private static AtSoundtrackThread runnable;
-    private @Setter AtSoundtrackSettings atSoundtrackSettings;
+    private AtSoundtrackSettings atSoundtrackSettings;
 
     public static Map<AtSoundtrackElement, String> getSoundtrack() {
         if (runnable != null) {
@@ -65,6 +70,10 @@ public class AtSoundtrack {
 
     public String getComponentName() {
         return "AtSoundtrack";
+    }
+
+    public void setAtSoundtrackSettings(AtSoundtrackSettings atSoundtrackSettings) {
+        this.atSoundtrackSettings = atSoundtrackSettings;
     }
 
     private static class AtSoundtrackThread implements Runnable {
@@ -114,12 +123,14 @@ public class AtSoundtrack {
         private List<SoundTrackProvider> getProviders() {
 
             if (atSoundtrackSettings.isPreferScriptEngine()) {
-                return Arrays.asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(),
-                        new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
+                return Arrays
+                        .asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(), new MusicOverAppleScriptEngine(), new MusicOverAppleScriptOSAScript(),
+                                new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
 
             }
 
-            return Arrays.asList(new ITunesOverAppleScriptOSAScript(), new SpotifyOverAppleScriptOSAScript());
+            return Arrays
+                    .asList(new ITunesOverAppleScriptOSAScript(), new MusicOverAppleScriptOSAScript(), new SpotifyOverAppleScriptOSAScript());
         }
 
         public Map<AtSoundtrackElement, String> getSoundtrack() {

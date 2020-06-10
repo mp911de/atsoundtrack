@@ -16,13 +16,19 @@
 
 package biz.paluch.atsoundtrack.settings;
 
-import javax.swing.*;
-import javax.swing.event.*;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
 
-import biz.paluch.atsoundtrack.AtSoundtrackElement;
-import lombok.Getter;
 import biz.paluch.atsoundtrack.AtSoundtrackComponent;
-
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.ui.DocumentAdapter;
 
@@ -42,8 +48,8 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
     private JCheckBox iTunesCheckBox;
     private JCheckBox spotifyCheckBox;
     private JTextField content;
-    private JLabel example;
-    private @Getter JPanel panel;
+	private JLabel example;
+	private JPanel panel;
 
     private final AtSoundtrackSettings initialSettings;
     private final AtSoundtrackSettings workingset;
@@ -213,14 +219,18 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
             return Parentheses.BRACKET;
         }
 
-        return Parentheses.NONE;
-    }
+		return Parentheses.NONE;
+	}
 
-    public boolean isModified() {
-        return !workingset.equals(initialSettings);
-    }
+	public boolean isModified() {
+		return !workingset.equals(initialSettings);
+	}
 
-    public void apply() {
-        initialSettings.apply(workingset);
-    }
+	public void apply() {
+		initialSettings.apply(workingset);
+	}
+
+	public JPanel getPanel() {
+		return this.panel;
+	}
 }

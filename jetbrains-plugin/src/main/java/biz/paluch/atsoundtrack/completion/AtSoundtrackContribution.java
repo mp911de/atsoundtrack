@@ -16,20 +16,20 @@
 
 package biz.paluch.atsoundtrack.completion;
 
-import lombok.Data;
-
 /**
  * Contribution configuration.
- * 
+ *
  * @author Mark Paluch
  */
-@Data
 public class AtSoundtrackContribution {
 
     private boolean prefixRequired;
     private boolean shouldContribute = false;
     private boolean displayPrefixCharIfPrefixFound = true;
     private char prefixChar = '@';
+
+    public AtSoundtrackContribution() {
+    }
 
     public void enableContribution() {
         shouldContribute = true;
@@ -41,5 +41,86 @@ public class AtSoundtrackContribution {
 
     public void prefixRequired() {
         prefixRequired = true;
+    }
+
+    public boolean isPrefixRequired() {
+        return this.prefixRequired;
+    }
+
+    public boolean isShouldContribute() {
+        return this.shouldContribute;
+    }
+
+    public boolean isDisplayPrefixCharIfPrefixFound() {
+        return this.displayPrefixCharIfPrefixFound;
+    }
+
+    public char getPrefixChar() {
+        return this.prefixChar;
+    }
+
+    public void setPrefixRequired(boolean prefixRequired) {
+        this.prefixRequired = prefixRequired;
+    }
+
+    public void setShouldContribute(boolean shouldContribute) {
+        this.shouldContribute = shouldContribute;
+    }
+
+    public void setDisplayPrefixCharIfPrefixFound(boolean displayPrefixCharIfPrefixFound) {
+        this.displayPrefixCharIfPrefixFound = displayPrefixCharIfPrefixFound;
+    }
+
+    public void setPrefixChar(char prefixChar) {
+        this.prefixChar = prefixChar;
+    }
+
+    public boolean equals(final Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof AtSoundtrackContribution)) {
+            return false;
+        }
+        final AtSoundtrackContribution other = (AtSoundtrackContribution) o;
+        if (!other.canEqual((Object) this)) {
+            return false;
+        }
+        if (this.isPrefixRequired() != other.isPrefixRequired()) {
+            return false;
+        }
+        if (this.isShouldContribute() != other.isShouldContribute()) {
+            return false;
+        }
+        if (this.isDisplayPrefixCharIfPrefixFound() != other
+                .isDisplayPrefixCharIfPrefixFound()) {
+            return false;
+        }
+        if (this.getPrefixChar() != other.getPrefixChar()) {
+            return false;
+        }
+        return true;
+    }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof AtSoundtrackContribution;
+    }
+
+    public int hashCode() {
+        final int PRIME = 59;
+        int result = 1;
+        result = result * PRIME + (this.isPrefixRequired() ? 79 : 97);
+        result = result * PRIME + (this.isShouldContribute() ? 79 : 97);
+        result = result * PRIME + (this.isDisplayPrefixCharIfPrefixFound() ? 79 : 97);
+        result = result * PRIME + this.getPrefixChar();
+        return result;
+    }
+
+    public String toString() {
+        return "AtSoundtrackContribution(prefixRequired=" + this
+                .isPrefixRequired() + ", shouldContribute=" + this
+                .isShouldContribute() + ", displayPrefixCharIfPrefixFound=" + this
+                .isDisplayPrefixCharIfPrefixFound() + ", prefixChar=" + this
+                .getPrefixChar() + ")";
     }
 }

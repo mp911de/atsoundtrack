@@ -19,14 +19,16 @@ package biz.paluch.atsoundtrack.settings;
 import java.io.File;
 
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
+import biz.paluch.atsoundtrack.Messages;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.components.ExportableApplicationComponent;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import biz.paluch.atsoundtrack.Messages;
-
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.*;
-import com.intellij.util.xmlb.XmlSerializerUtil;
 
 /**
  * @author Mark Paluch
