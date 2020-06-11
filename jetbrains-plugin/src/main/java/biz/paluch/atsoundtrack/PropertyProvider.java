@@ -16,17 +16,16 @@
 
 package biz.paluch.atsoundtrack;
 
-import java.util.Properties;
-
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import biz.paluch.atsoundtrack.settings.PluginSettings;
-
 import com.intellij.ide.fileTemplates.DefaultTemplatePropertiesProvider;
 import com.intellij.psi.PsiDirectory;
 
+import java.util.Properties;
+
 /**
  * Property provider for file templates.
- * 
+ *
  * @author Mark Paluch
  * @since 13.05.15 10:01
  */
@@ -37,7 +36,7 @@ public class PropertyProvider implements DefaultTemplatePropertiesProvider {
     @Override
     public void fillProperties(PsiDirectory psiDirectory, Properties properties) {
 
-        String name = Renderer.render(AtSoundtrackComponent.getSoundtrack(), settings);
+        String name = Renderer.render(AtSoundtrackComponent.getSoundtrack(), this.settings);
         if (!name.trim().isEmpty()) {
             properties.put("soundtrack", name);
         } else {

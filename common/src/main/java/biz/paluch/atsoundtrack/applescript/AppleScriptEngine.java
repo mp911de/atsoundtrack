@@ -29,7 +29,7 @@ public class AppleScriptEngine {
     static {
         if (OSAScript.IS_MAC) {
             try {
-                factoryClass = (Class) Class.forName("apple.applescript.AppleScriptEngineFactory");
+                factoryClass = (Class<ScriptEngineFactory>) Class.forName("apple.applescript.AppleScriptEngineFactory");
             } catch (ClassNotFoundException e) {
             }
         }
@@ -40,9 +40,7 @@ public class AppleScriptEngine {
     }
 
     /**
-     * 
      * @return true if available
-     * 
      */
     public static boolean isAvailable() {
         return factoryClass != null;
@@ -50,7 +48,7 @@ public class AppleScriptEngine {
 
     /**
      * Create a new script engine instance.
-     * 
+     *
      * @return a new {@linkplain ScriptEngine}
      */
     public static ScriptEngine createScriptEngine() {

@@ -16,15 +16,14 @@
 
 package biz.paluch.atsoundtrack;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
+import biz.paluch.atsoundtrack.settings.Parentheses;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Test;
-
-import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
-import biz.paluch.atsoundtrack.settings.Parentheses;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Mark Paluch
@@ -36,7 +35,7 @@ public class RendererTest {
 
         AtSoundtrackSettings settings = new AtSoundtrackSettings();
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.STREAM_TITLE, "stream");
         input.put(AtSoundtrackElement.ARTIST, "artist");
         input.put(AtSoundtrackElement.TITLE, "track");
@@ -51,7 +50,7 @@ public class RendererTest {
 
         AtSoundtrackSettings settings = new AtSoundtrackSettings();
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.ARTIST, "artist");
         input.put(AtSoundtrackElement.TITLE, "track");
 
@@ -67,7 +66,7 @@ public class RendererTest {
         settings.getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.BRACKET);
         settings.getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.CURLY);
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.ARTIST, "artist");
         input.put(AtSoundtrackElement.TITLE, "track");
 
@@ -83,7 +82,7 @@ public class RendererTest {
         settings.getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.ROUND);
         settings.getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.TRIANGLE);
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.ARTIST, "artist");
         input.put(AtSoundtrackElement.TITLE, "track");
 
@@ -100,7 +99,7 @@ public class RendererTest {
         settings.getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.TRIANGLE);
         settings.getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.ROUND);
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.ARTIST, "artist");
 
         String result = Renderer.render(input, settings);
@@ -116,7 +115,7 @@ public class RendererTest {
         settings.getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.TRIANGLE);
         settings.getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.ROUND);
 
-        Map<AtSoundtrackElement, String> input = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> input = new HashMap<>();
         input.put(AtSoundtrackElement.ARTIST, "art $1 \\.*;.-¢¢[]()");
 
         String result = Renderer.render(input, settings);

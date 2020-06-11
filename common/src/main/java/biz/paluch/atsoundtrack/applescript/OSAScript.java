@@ -16,14 +16,14 @@
 
 package biz.paluch.atsoundtrack.applescript;
 
+import biz.paluch.atsoundtrack.logging.InternalLogger;
+import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Locale;
-
-import biz.paluch.atsoundtrack.logging.InternalLogger;
-import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 
 /**
  * @author Mark Paluch
@@ -40,7 +40,7 @@ public class OSAScript {
 
     static {
 
-        IS_MAC = OS_NAME.indexOf("mac os x") > -1;
+        IS_MAC = OS_NAME.contains("mac os x");
 
         boolean check = false;
         if (IS_MAC) {
@@ -58,9 +58,9 @@ public class OSAScript {
     }
 
     /**
-     * 
+     *
      * @return true if available
-     * 
+     *
      */
     public static boolean isAvailable() {
         return available;
@@ -68,7 +68,7 @@ public class OSAScript {
 
     /**
      * Execute AppleScript using {@literal osascript} No exceptions are thrown by this method.
-     * 
+     *
      * @param code the code to evaluate
      * @return script result.
      */

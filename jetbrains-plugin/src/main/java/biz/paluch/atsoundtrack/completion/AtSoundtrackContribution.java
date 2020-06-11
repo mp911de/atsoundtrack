@@ -16,6 +16,8 @@
 
 package biz.paluch.atsoundtrack.completion;
 
+import java.util.Objects;
+
 /**
  * Contribution configuration.
  *
@@ -32,15 +34,15 @@ public class AtSoundtrackContribution {
     }
 
     public void enableContribution() {
-        shouldContribute = true;
+        this.shouldContribute = true;
     }
 
     public boolean shouldContribute() {
-        return shouldContribute;
+        return this.shouldContribute;
     }
 
     public void prefixRequired() {
-        prefixRequired = true;
+        this.prefixRequired = true;
     }
 
     public boolean isPrefixRequired() {
@@ -75,46 +77,27 @@ public class AtSoundtrackContribution {
         this.prefixChar = prefixChar;
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
         if (!(o instanceof AtSoundtrackContribution)) {
             return false;
         }
-        final AtSoundtrackContribution other = (AtSoundtrackContribution) o;
-        if (!other.canEqual((Object) this)) {
-            return false;
-        }
-        if (this.isPrefixRequired() != other.isPrefixRequired()) {
-            return false;
-        }
-        if (this.isShouldContribute() != other.isShouldContribute()) {
-            return false;
-        }
-        if (this.isDisplayPrefixCharIfPrefixFound() != other
-                .isDisplayPrefixCharIfPrefixFound()) {
-            return false;
-        }
-        if (this.getPrefixChar() != other.getPrefixChar()) {
-            return false;
-        }
-        return true;
+        AtSoundtrackContribution that = (AtSoundtrackContribution) o;
+        return this.prefixRequired == that.prefixRequired &&
+                this.shouldContribute == that.shouldContribute &&
+                this.displayPrefixCharIfPrefixFound == that.displayPrefixCharIfPrefixFound &&
+                this.prefixChar == that.prefixChar;
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof AtSoundtrackContribution;
-    }
-
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        result = result * PRIME + (this.isPrefixRequired() ? 79 : 97);
-        result = result * PRIME + (this.isShouldContribute() ? 79 : 97);
-        result = result * PRIME + (this.isDisplayPrefixCharIfPrefixFound() ? 79 : 97);
-        result = result * PRIME + this.getPrefixChar();
-        return result;
+        return Objects
+                .hash(this.prefixRequired, this.shouldContribute, this.displayPrefixCharIfPrefixFound, this.prefixChar);
     }
+
 
     public String toString() {
         return "AtSoundtrackContribution(prefixRequired=" + this

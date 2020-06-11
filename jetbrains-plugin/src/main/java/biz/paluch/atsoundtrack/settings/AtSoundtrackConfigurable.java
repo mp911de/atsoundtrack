@@ -16,14 +16,14 @@
 
 package biz.paluch.atsoundtrack.settings;
 
-import javax.swing.*;
-
 import biz.paluch.atsoundtrack.Messages;
 import com.intellij.openapi.options.SearchableConfigurable;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 public class AtSoundtrackConfigurable implements SearchableConfigurable {
 
@@ -46,34 +46,34 @@ public class AtSoundtrackConfigurable implements SearchableConfigurable {
     @Override
     @NotNull
     public JComponent createComponent() {
-        if (form == null) {
-            form = new AtSoundtrackConfigurationForm(PluginSettings.getInstance());
+        if (this.form == null) {
+            this.form = new AtSoundtrackConfigurationForm(PluginSettings.getInstance());
         }
-        return form.getPanel();
+        return this.form.getPanel();
     }
 
     @Override
     public boolean isModified() {
-        return form != null && (form.isModified());
+        return this.form != null && (this.form.isModified());
     }
 
     @Override
     public void apply() {
-        if (form != null) {
-            form.apply();
+        if (this.form != null) {
+            this.form.apply();
         }
     }
 
     @Override
     public void reset() {
-        if (form != null) {
-            form.initFromSettings();
+        if (this.form != null) {
+            this.form.initFromSettings();
         }
     }
 
     @Override
     public void disposeUIResources() {
-        form = null;
+        this.form = null;
     }
 
     @NotNull

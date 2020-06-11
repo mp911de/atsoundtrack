@@ -16,10 +16,11 @@
 
 package biz.paluch.atsoundtrack.settings;
 
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import biz.paluch.atsoundtrack.AtSoundtrackElement;
+import java.util.Objects;
 
 /**
  * Settings for AtSoundtrack
@@ -32,7 +33,7 @@ public class AtSoundtrackSettings {
     private boolean iTunes = true;
     private boolean spotify = true;
     private boolean preferScriptEngine = false;
-    private Map<AtSoundtrackElement, Parentheses> parentheses = new HashMap<AtSoundtrackElement, Parentheses>();
+    private Map<AtSoundtrackElement, Parentheses> parentheses = new HashMap<>();
     private String content = "${title} - ${artist}";
 
     public AtSoundtrackSettings(long sleepMs, boolean iTunes, boolean spotify, boolean preferScriptEngine, Map<AtSoundtrackElement, Parentheses> parentheses, String content) {
@@ -48,8 +49,8 @@ public class AtSoundtrackSettings {
     }
 
     public AtSoundtrackSettings clone() {
-        return new AtSoundtrackSettings(sleepMs, iTunes, spotify, preferScriptEngine,
-                new HashMap<AtSoundtrackElement, Parentheses>(parentheses), content);
+        return new AtSoundtrackSettings(this.sleepMs, this.iTunes, this.spotify, this.preferScriptEngine,
+                new HashMap<>(this.parentheses), this.content);
     }
 
     public void apply(AtSoundtrackSettings atSoundtrackSettings) {
@@ -57,7 +58,7 @@ public class AtSoundtrackSettings {
         this.content = atSoundtrackSettings.content;
         this.iTunes = atSoundtrackSettings.iTunes;
         this.spotify = atSoundtrackSettings.spotify;
-        this.parentheses = new HashMap<AtSoundtrackElement, Parentheses>(atSoundtrackSettings.parentheses);
+        this.parentheses = new HashMap<>(atSoundtrackSettings.parentheses);
     }
 
     public long getSleepMs() {
@@ -108,61 +109,27 @@ public class AtSoundtrackSettings {
         this.content = content;
     }
 
-    public boolean equals(final Object o) {
-        if (o == this) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
             return true;
         }
         if (!(o instanceof AtSoundtrackSettings)) {
             return false;
         }
-        final AtSoundtrackSettings other = (AtSoundtrackSettings) o;
-        if (!other.canEqual((Object) this)) {
-            return false;
-        }
-        if (this.getSleepMs() != other.getSleepMs()) {
-            return false;
-        }
-        if (this.isITunes() != other.isITunes()) {
-            return false;
-        }
-        if (this.isSpotify() != other.isSpotify()) {
-            return false;
-        }
-        if (this.isPreferScriptEngine() != other.isPreferScriptEngine()) {
-            return false;
-        }
-        final Object this$parentheses = this.getParentheses();
-        final Object other$parentheses = other.getParentheses();
-        if (this$parentheses == null ? other$parentheses != null : !this$parentheses
-                .equals(other$parentheses)) {
-            return false;
-        }
-        final Object this$content = this.getContent();
-        final Object other$content = other.getContent();
-        if (this$content == null ? other$content != null : !this$content
-                .equals(other$content)) {
-            return false;
-        }
-        return true;
+        AtSoundtrackSettings that = (AtSoundtrackSettings) o;
+        return this.sleepMs == that.sleepMs &&
+                this.iTunes == that.iTunes &&
+                this.spotify == that.spotify &&
+                this.preferScriptEngine == that.preferScriptEngine &&
+                Objects.equals(this.parentheses, that.parentheses) &&
+                Objects.equals(this.content, that.content);
     }
 
-    protected boolean canEqual(final Object other) {
-        return other instanceof AtSoundtrackSettings;
-    }
-
+    @Override
     public int hashCode() {
-        final int PRIME = 59;
-        int result = 1;
-        final long $sleepMs = this.getSleepMs();
-        result = result * PRIME + (int) ($sleepMs >>> 32 ^ $sleepMs);
-        result = result * PRIME + (this.isITunes() ? 79 : 97);
-        result = result * PRIME + (this.isSpotify() ? 79 : 97);
-        result = result * PRIME + (this.isPreferScriptEngine() ? 79 : 97);
-        final Object $parentheses = this.getParentheses();
-        result = result * PRIME + ($parentheses == null ? 43 : $parentheses.hashCode());
-        final Object $content = this.getContent();
-        result = result * PRIME + ($content == null ? 43 : $content.hashCode());
-        return result;
+        return Objects
+                .hash(this.sleepMs, this.iTunes, this.spotify, this.preferScriptEngine, this.parentheses, this.content);
     }
 
     public String toString() {

@@ -16,13 +16,13 @@
 
 package biz.paluch.atsoundtrack.spotify;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptException;
-
 import biz.paluch.atsoundtrack.applescript.AppleScriptEngine;
 import biz.paluch.atsoundtrack.logging.InternalLogger;
 import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 
 /**
  * @author Mark Paluch
@@ -44,10 +44,10 @@ public class SpotifyOverAppleScriptEngine extends AbstractSpotifyAppleScriptProv
 
     private ScriptEngine getScriptEngine() {
 
-        if (scriptEngine == null) {
-            scriptEngine = AppleScriptEngine.createScriptEngine();
+        if (this.scriptEngine == null) {
+            this.scriptEngine = AppleScriptEngine.createScriptEngine();
         }
-        return scriptEngine;
+        return this.scriptEngine;
     }
 
     @Override

@@ -16,14 +16,13 @@
 
 package biz.paluch.atsoundtrack;
 
-import java.lang.ref.Reference;
-import java.lang.ref.SoftReference;
-import java.util.ResourceBundle;
-
+import com.intellij.CommonBundle;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.PropertyKey;
 
-import com.intellij.CommonBundle;
+import java.lang.ref.Reference;
+import java.lang.ref.SoftReference;
+import java.util.ResourceBundle;
 
 /**
  * @author Mark Paluch
@@ -45,7 +44,7 @@ public class Messages {
         }
         if (bundle == null) {
             bundle = ResourceBundle.getBundle(BUNDLE_NAME);
-            Messages.bundle = new SoftReference<ResourceBundle>(bundle);
+            Messages.bundle = new SoftReference<>(bundle);
         }
         return bundle;
     }

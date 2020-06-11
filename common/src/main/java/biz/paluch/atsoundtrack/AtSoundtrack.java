@@ -16,14 +16,6 @@
 
 package biz.paluch.atsoundtrack;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicReference;
-
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptOSAScript;
 import biz.paluch.atsoundtrack.itunes.MusicOverAppleScriptEngine;
@@ -33,6 +25,10 @@ import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptEngine;
 import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptOSAScript;
+
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Mark Paluch
@@ -58,7 +54,7 @@ public class AtSoundtrack {
     public void initComponent() {
 
         log.debug("Create AtSoundtrackThread");
-        runnable = new AtSoundtrackThread(atSoundtrackSettings);
+        runnable = new AtSoundtrackThread(this.atSoundtrackSettings);
         atSoundtrackThread = new Thread(runnable, "AtSoundtrackThread");
         atSoundtrackThread.setDaemon(true);
         atSoundtrackThread.start();
@@ -79,8 +75,8 @@ public class AtSoundtrack {
     private static class AtSoundtrackThread implements Runnable {
 
         private final AtSoundtrackSettings atSoundtrackSettings;
-        private AtomicReference<Map<AtSoundtrackElement, String>> soundtrack = new AtomicReference<Map<AtSoundtrackElement, String>>(
-                new HashMap<AtSoundtrackElement, String>());
+        private AtomicReference<Map<AtSoundtrackElement, String>> soundtrack = new AtomicReference<>(
+                new HashMap<>());
         private AtomicBoolean atomicBoolean = new AtomicBoolean(true);
 
         public AtSoundtrackThread(AtSoundtrackSettings atSoundtrackSettings) {
@@ -92,13 +88,13 @@ public class AtSoundtrack {
 
             List<SoundTrackProvider> providers = getProviders();
 
-            while (atomicBoolean.get()) {
+            while (this.atomicBoolean.get()) {
 
                 boolean found = false;
                 try {
                     for (SoundTrackProvider provider : providers) {
-                        if (provider.isApplicable(atSoundtrackSettings)) {
-                            soundtrack.set(provider.getSoundtrack());
+                        if (provider.isApplicable(this.atSoundtrackSettings)) {
+                            this.soundtrack.set(provider.getSoundtrack());
                             found = true;
                             break;
                         }
@@ -109,11 +105,11 @@ public class AtSoundtrack {
                 }
 
                 if (!found) {
-                    soundtrack.set(new HashMap<AtSoundtrackElement, String>());
+                    this.soundtrack.set(new HashMap<>());
                 }
 
                 try {
-                    Thread.sleep(atSoundtrackSettings.getSleepMs());
+                    Thread.sleep(this.atSoundtrackSettings.getSleepMs());
                 } catch (InterruptedException e) {
                     return;
                 }
@@ -122,7 +118,7 @@ public class AtSoundtrack {
 
         private List<SoundTrackProvider> getProviders() {
 
-            if (atSoundtrackSettings.isPreferScriptEngine()) {
+            if (this.atSoundtrackSettings.isPreferScriptEngine()) {
                 return Arrays
                         .asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(), new MusicOverAppleScriptEngine(), new MusicOverAppleScriptOSAScript(),
                                 new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
@@ -134,11 +130,11 @@ public class AtSoundtrack {
         }
 
         public Map<AtSoundtrackElement, String> getSoundtrack() {
-            return soundtrack.get();
+            return this.soundtrack.get();
         }
 
         public void stop() {
-            atomicBoolean.set(false);
+            this.atomicBoolean.set(false);
         }
     }
 }

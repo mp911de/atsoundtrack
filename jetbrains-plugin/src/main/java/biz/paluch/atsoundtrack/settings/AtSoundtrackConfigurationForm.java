@@ -16,21 +16,16 @@
 
 package biz.paluch.atsoundtrack.settings;
 
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.event.AncestorEvent;
-import javax.swing.event.AncestorListener;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.DocumentEvent;
-
 import biz.paluch.atsoundtrack.AtSoundtrackComponent;
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.ui.DocumentAdapter;
+
+import javax.swing.*;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
 
 /**
  * @author Mark Paluch
@@ -56,95 +51,93 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
     private boolean muteEvents = false;
 
     public AtSoundtrackConfigurationForm(AtSoundtrackSettings initialSettings) {
-        this.initialSettings = initialSettings;
-        this.workingset = initialSettings.clone();
+		this.initialSettings = initialSettings;
+		this.workingset = initialSettings.clone();
 
-        panel.addAncestorListener(new AncestorListener() {
-            @Override
-            public void ancestorAdded(AncestorEvent event) {
-                // Called when component becomes visible, to ensure that the
-                // popups
-                // are visible when the form is shown for the first time.
-                updateComponents();
-            }
+		this.panel.addAncestorListener(new AncestorListener() {
+			@Override
+			public void ancestorAdded(AncestorEvent event) {
+				// Called when component becomes visible, to ensure that the
+				// popups
+				// are visible when the form is shown for the first time.
+				updateComponents();
+			}
 
-            @Override
-            public void ancestorRemoved(AncestorEvent event) {
-            }
+			@Override
+			public void ancestorRemoved(AncestorEvent event) {
+			}
 
-            @Override
-            public void ancestorMoved(AncestorEvent event) {
-            }
-        });
+			@Override
+			public void ancestorMoved(AncestorEvent event) {
+			}
+		});
 
-        content.getDocument().addDocumentListener(new DocumentAdapter() {
-            @Override
-            protected void textChanged(DocumentEvent e) {
-                if (muteEvents) {
-                    return;
-                }
-                workingset.setContent(content.getText());
-                updateExample();
-            }
-        });
+		this.content.getDocument().addDocumentListener(new DocumentAdapter() {
+			@Override
+			protected void textChanged(DocumentEvent e) {
+				if (AtSoundtrackConfigurationForm.this.muteEvents) {
+					return;
+				}
+				AtSoundtrackConfigurationForm.this.workingset
+						.setContent(AtSoundtrackConfigurationForm.this.content.getText());
+				updateExample();
+			}
+		});
 
-        ChangeListener changeListener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                if (muteEvents) {
-                    return;
-                }
-                toWorkingset();
-                updateExample();
-            }
-        };
+		ChangeListener changeListener = e -> {
+			if (AtSoundtrackConfigurationForm.this.muteEvents) {
+				return;
+			}
+			toWorkingset();
+			updateExample();
+		};
 
-        iTunesCheckBox.addChangeListener(changeListener);
-        spotifyCheckBox.addChangeListener(changeListener);
+		this.iTunesCheckBox.addChangeListener(changeListener);
+		this.spotifyCheckBox.addChangeListener(changeListener);
 
-        titleBracketsRadioButton.addChangeListener(changeListener);
-        titleCurlyRadioButton.addChangeListener(changeListener);
-        titleNoneRadioButton.addChangeListener(changeListener);
-        titleRoundRadioButton.addChangeListener(changeListener);
+		this.titleBracketsRadioButton.addChangeListener(changeListener);
+		this.titleCurlyRadioButton.addChangeListener(changeListener);
+		this.titleNoneRadioButton.addChangeListener(changeListener);
+		this.titleRoundRadioButton.addChangeListener(changeListener);
 
-        artistBracketsRadioButton.addChangeListener(changeListener);
-        artistCurlyRadioButton.addChangeListener(changeListener);
-        artistNoneRadioButton.addChangeListener(changeListener);
-        artistRoundRadioButton.addChangeListener(changeListener);
-        initFromSettings();
-    }
+		this.artistBracketsRadioButton.addChangeListener(changeListener);
+		this.artistCurlyRadioButton.addChangeListener(changeListener);
+		this.artistNoneRadioButton.addChangeListener(changeListener);
+		this.artistRoundRadioButton.addChangeListener(changeListener);
+		initFromSettings();
+	}
 
     private void updateExample() {
 
-        String renderedSoundtrack = biz.paluch.atsoundtrack.Renderer.render(AtSoundtrackComponent.getSoundtrack(), workingset);
+		String renderedSoundtrack = biz.paluch.atsoundtrack.Renderer.render(AtSoundtrackComponent.getSoundtrack(), this.workingset);
 
         if (!renderedSoundtrack.trim().isEmpty()) {
-            example.setText(String.format("@soundtrack %s", renderedSoundtrack));
-        } else {
-            example.setText("Cannot provide @soundtrack");
-        }
+			this.example.setText(String.format("@soundtrack %s", renderedSoundtrack));
+		} else {
+			this.example.setText("Cannot provide @soundtrack");
+		}
 
     }
 
     private void updateComponents() {
-        setData(workingset);
+		setData(this.workingset);
     }
 
     private void setData(AtSoundtrackSettings data) {
 
         try {
-            muteEvents = true;
-            setParentheses(data.getParentheses().get(AtSoundtrackElement.ARTIST), artistNoneRadioButton, artistRoundRadioButton,
-                    artistCurlyRadioButton, artistBracketsRadioButton);
-            setParentheses(data.getParentheses().get(AtSoundtrackElement.STREAM_TITLE), titleNoneRadioButton,
-                    titleRoundRadioButton, titleCurlyRadioButton, titleBracketsRadioButton);
+			this.muteEvents = true;
+			setParentheses(data.getParentheses().get(AtSoundtrackElement.ARTIST), this.artistNoneRadioButton, this.artistRoundRadioButton,
+					this.artistCurlyRadioButton, this.artistBracketsRadioButton);
+			setParentheses(data.getParentheses().get(AtSoundtrackElement.STREAM_TITLE), this.titleNoneRadioButton,
+					this.titleRoundRadioButton, this.titleCurlyRadioButton, this.titleBracketsRadioButton);
 
-            content.setText(data.getContent());
-            iTunesCheckBox.setSelected(data.isITunes());
-            spotifyCheckBox.setSelected(data.isSpotify());
-        } finally {
-            muteEvents = false;
-        }
+			this.content.setText(data.getContent());
+			this.iTunesCheckBox.setSelected(data.isITunes());
+			this.spotifyCheckBox.setSelected(data.isSpotify());
+		} finally {
+			this.muteEvents = false;
+		}
     }
 
     private void setParentheses(Parentheses parentheses, JRadioButton none, JRadioButton round, JRadioButton curly,
@@ -184,26 +177,26 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
     }
 
     public void initFromSettings() {
-        workingset.apply(initialSettings);
-        setData(workingset);
-        updateExample();
-    }
+		this.workingset.apply(this.initialSettings);
+		setData(this.workingset);
+		updateExample();
+	}
 
     public void toWorkingset() {
 
-        Parentheses titleParentheses = toParentheses(titleNoneRadioButton, titleRoundRadioButton, titleCurlyRadioButton,
-                titleBracketsRadioButton);
-        workingset.getParentheses().put(AtSoundtrackElement.TITLE, titleParentheses);
+		Parentheses titleParentheses = toParentheses(this.titleNoneRadioButton, this.titleRoundRadioButton, this.titleCurlyRadioButton,
+				this.titleBracketsRadioButton);
+		this.workingset.getParentheses().put(AtSoundtrackElement.TITLE, titleParentheses);
 
-        Parentheses artistParentheses = toParentheses(artistNoneRadioButton, artistRoundRadioButton, artistCurlyRadioButton,
-                artistBracketsRadioButton);
-        workingset.getParentheses().put(AtSoundtrackElement.ARTIST, artistParentheses);
+		Parentheses artistParentheses = toParentheses(this.artistNoneRadioButton, this.artistRoundRadioButton, this.artistCurlyRadioButton,
+				this.artistBracketsRadioButton);
+		this.workingset.getParentheses().put(AtSoundtrackElement.ARTIST, artistParentheses);
 
-        workingset.setContent(this.content.getText());
-        workingset.setSpotify(this.spotifyCheckBox.isSelected());
-        workingset.setITunes(this.iTunesCheckBox.isSelected());
+		this.workingset.setContent(this.content.getText());
+		this.workingset.setSpotify(this.spotifyCheckBox.isSelected());
+		this.workingset.setITunes(this.iTunesCheckBox.isSelected());
 
-    }
+	}
 
     private Parentheses toParentheses(JRadioButton none, JRadioButton round, JRadioButton curly, JRadioButton brackets) {
 
@@ -223,11 +216,11 @@ public class AtSoundtrackConfigurationForm implements Configurable.NoScroll {
 	}
 
 	public boolean isModified() {
-		return !workingset.equals(initialSettings);
+		return !this.workingset.equals(this.initialSettings);
 	}
 
 	public void apply() {
-		initialSettings.apply(workingset);
+		this.initialSettings.apply(this.workingset);
 	}
 
 	public JPanel getPanel() {

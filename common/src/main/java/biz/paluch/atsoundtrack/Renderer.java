@@ -16,15 +16,16 @@
 
 package biz.paluch.atsoundtrack;
 
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
+import biz.paluch.atsoundtrack.settings.Parentheses;
+import com.intellij.openapi.util.text.StringUtil;
+
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
-import biz.paluch.atsoundtrack.settings.Parentheses;
-
 /**
  * Soundtrack renderer.
- * 
+ *
  * @author Mark Paluch
  */
 public class Renderer {
@@ -34,7 +35,7 @@ public class Renderer {
 
     /**
      * Render soundtrack.
-     * 
+     *
      * @param map
      * @param settings
      * @return
@@ -50,7 +51,7 @@ public class Renderer {
         }
 
         try {
-            String result = null;
+            String result;
             String artistContent = getContent(map, settings, AtSoundtrackElement.ARTIST);
             String trackContent = getContent(map, settings, AtSoundtrackElement.TITLE);
 
@@ -81,7 +82,7 @@ public class Renderer {
         }
         String content = map.get(element).trim();
 
-        if (content != null && !content.trim().isEmpty()) {
+        if (StringUtil.isNotEmpty(content)) {
             if (settings.getParentheses().containsKey(element)) {
                 Parentheses parentheses = settings.getParentheses().get(element);
 

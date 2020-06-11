@@ -16,12 +16,12 @@
 
 package biz.paluch.atsoundtrack.spotify;
 
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
+import biz.paluch.atsoundtrack.SoundTrackProvider;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-import biz.paluch.atsoundtrack.AtSoundtrackElement;
-import biz.paluch.atsoundtrack.SoundTrackProvider;
 
 /**
  * @author Mark Paluch
@@ -36,7 +36,7 @@ public abstract class AbstractSpotifyAppleScriptProvider implements SoundTrackPr
             return Collections.emptyMap();
         }
 
-        Map<AtSoundtrackElement, String> names = new HashMap<AtSoundtrackElement, String>();
+        Map<AtSoundtrackElement, String> names = new HashMap<>();
         String title = "" + eval("tell application \"Spotify\"\n" + "get name of current track\n" + "end tell");
         String artist = "" + eval("tell application \"Spotify\"\n" + "get artist of current track\n" + "end tell");
 

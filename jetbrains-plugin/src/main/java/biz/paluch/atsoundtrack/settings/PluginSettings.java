@@ -16,19 +16,15 @@
 
 package biz.paluch.atsoundtrack.settings;
 
-import java.io.File;
-
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import biz.paluch.atsoundtrack.Messages;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.ApplicationComponent;
-import com.intellij.openapi.components.ExportableApplicationComponent;
-import com.intellij.openapi.components.PersistentStateComponent;
-import com.intellij.openapi.components.State;
-import com.intellij.openapi.components.Storage;
+import com.intellij.openapi.components.*;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
 
 /**
  * @author Mark Paluch
@@ -47,7 +43,8 @@ public class PluginSettings extends AtSoundtrackSettings
     public void initComponent() {
 
         if (getParentheses().isEmpty()) {
-            getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.NONE);
+            getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.NONE);
+            getParentheses().put(AtSoundtrackElement.STREAM_TITLE, Parentheses.NONE);
             getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.NONE);
         }
     }
