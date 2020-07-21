@@ -16,26 +16,35 @@
 
 package biz.paluch.atsoundtrack.itunes;
 
-import biz.paluch.atsoundtrack.applescript.OSAScript;
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
+import biz.paluch.atsoundtrack.SoundTrackProvider;
+import biz.paluch.atsoundtrack.applescript.ScriptEvaluator;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
-/**
- * @author Mark Paluch
- * @since 1.3
- */
-public class MusicOverAppleScriptOSAScript extends AbstractITunesAppleScriptProvider {
+import java.util.Map;
 
-    public MusicOverAppleScriptOSAScript() {
-        super("Music");
+/**
+ * Apple Music app since macOS Catalina.
+ *
+ * @author Mark Paluch
+ * @since 21.07.2020
+ */
+public class AppleMusicOverAppleScript implements SoundTrackProvider {
+
+    private final AppleMusicDelegate delegate;
+
+    public AppleMusicOverAppleScript(ScriptEvaluator evaluator) {
+        this.delegate = new AppleMusicDelegate("Music", evaluator);
     }
 
     @Override
     public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
-        return atSoundtrackSettings.isITunes() && OSAScript.isAvailable() && isRunning();
+        return atSoundtrackSettings.isITunes() && this.delegate.isRunning();
     }
 
-    protected String eval(String code) {
-        return OSAScript.eval(code);
+    @Override
+    public Map<AtSoundtrackElement, String> getSoundtrack() {
+        return this.delegate.getSoundtrack();
     }
 
 }

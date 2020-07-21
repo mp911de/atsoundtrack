@@ -17,7 +17,7 @@
 package biz.paluch.atsoundtrack.itunes;
 
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
-import biz.paluch.atsoundtrack.SoundTrackProvider;
+import biz.paluch.atsoundtrack.applescript.ScriptEvaluator;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -25,17 +25,19 @@ import java.util.Map;
 
 /**
  * @author Mark Paluch
- * @soundtrack Menno de Jong - Cloudcast 032 (May 2015)
+ * @soundtrack RFLKTD - To The Milky Way and Beyond (Original Mix)
+ * @since 20.07.2020
  */
-public abstract class AbstractITunesAppleScriptProvider implements SoundTrackProvider {
+class AppleMusicDelegate {
 
     private final String applicationName;
+    private final ScriptEvaluator evaluator;
 
-    protected AbstractITunesAppleScriptProvider(String applicationName) {
+    public AppleMusicDelegate(String applicationName, ScriptEvaluator evaluator) {
         this.applicationName = applicationName;
+        this.evaluator = evaluator;
     }
 
-    @Override
     public Map<AtSoundtrackElement, String> getSoundtrack() {
 
         if (!isRunning()) {
@@ -44,17 +46,17 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
 
         Map<AtSoundtrackElement, String> names = new HashMap<>();
 
-        String streamTitle = "" + eval("tell application \"" + this.applicationName + "\" to get current stream title");
+        String streamTitle = "" + evaluate("tell application \"" + this.applicationName + "\" to get current stream title");
         if (!streamTitle.contains("NSAppleEventDescriptor") && !streamTitle.contains("''msng''")
                 && !streamTitle.equals("missing value")) {
 
             names.put(AtSoundtrackElement.STREAM_TITLE, streamTitle);
         }
 
-        String title = "" + eval("tell application \"" + this.applicationName + "\"\n" + "\tif exists name of current track then\n"
+        String title = "" + evaluate("tell application \"" + this.applicationName + "\"\n" + "\tif exists name of current track then\n"
                 + "\t\tget name of current track\n" + "\tend if\n" + "end tell");
 
-        String artist = "" + eval("tell application \"" + this.applicationName + "\"\n" + "\tif exists artist of current track then\n"
+        String artist = "" + evaluate("tell application \"" + this.applicationName + "\"\n" + "\tif exists artist of current track then\n"
                 + "\t\tget artist of current track\n" + "\tend if\n" + "end tell");
 
         if ("null".equals(title)) {
@@ -79,18 +81,26 @@ public abstract class AbstractITunesAppleScriptProvider implements SoundTrackPro
     }
 
     protected boolean isRunning() {
-        String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"" + this.applicationName + "\"");
+
+        if (!this.evaluator.isAvailable()) {
+            return false;
+        }
+
+        String isRunning = evaluate("tell application \"System Events\" to (name of processes) contains \"" + this.applicationName + "\"");
 
         if ("false".equals("" + isRunning) || "0".equals("" + isRunning)) {
             return false;
         }
 
-        String playerState = "" + eval("tell application \"" + this.applicationName + "\" to get player state as string");
+        String playerState = "" + evaluate("tell application \"" + this.applicationName + "\" to get player state as string");
         if (!"playing".equals(playerState)) {
             return false;
         }
         return true;
     }
 
-    protected abstract String eval(String code);
+    private String evaluate(String script) {
+        return this.evaluator.evaluate(script);
+    }
+
 }
