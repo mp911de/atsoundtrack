@@ -16,15 +16,13 @@
 
 package biz.paluch.atsoundtrack;
 
-import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptEngine;
-import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScriptOSAScript;
-import biz.paluch.atsoundtrack.itunes.MusicOverAppleScriptEngine;
-import biz.paluch.atsoundtrack.itunes.MusicOverAppleScriptOSAScript;
+import biz.paluch.atsoundtrack.applescript.AppleScriptEvaluators;
+import biz.paluch.atsoundtrack.itunes.AppleMusicOverAppleScript;
+import biz.paluch.atsoundtrack.itunes.ITunesOverAppleScript;
 import biz.paluch.atsoundtrack.logging.InternalLogger;
 import biz.paluch.atsoundtrack.logging.InternalLoggerFactory;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
-import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptEngine;
-import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScriptOSAScript;
+import biz.paluch.atsoundtrack.spotify.SpotifyOverAppleScript;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -75,9 +73,9 @@ public class AtSoundtrack {
     private static class AtSoundtrackThread implements Runnable {
 
         private final AtSoundtrackSettings atSoundtrackSettings;
-        private AtomicReference<Map<AtSoundtrackElement, String>> soundtrack = new AtomicReference<>(
+        private final AtomicReference<Map<AtSoundtrackElement, String>> soundtrack = new AtomicReference<>(
                 new HashMap<>());
-        private AtomicBoolean atomicBoolean = new AtomicBoolean(true);
+        private final AtomicBoolean atomicBoolean = new AtomicBoolean(true);
 
         public AtSoundtrackThread(AtSoundtrackSettings atSoundtrackSettings) {
             this.atSoundtrackSettings = atSoundtrackSettings;
@@ -120,13 +118,12 @@ public class AtSoundtrack {
 
             if (this.atSoundtrackSettings.isPreferScriptEngine()) {
                 return Arrays
-                        .asList(new ITunesOverAppleScriptEngine(), new ITunesOverAppleScriptOSAScript(), new MusicOverAppleScriptEngine(), new MusicOverAppleScriptOSAScript(),
-                                new SpotifyOverAppleScriptEngine(), new SpotifyOverAppleScriptOSAScript());
+                        .asList(new ITunesOverAppleScript(AppleScriptEvaluators.ScriptEngine), new AppleMusicOverAppleScript(AppleScriptEvaluators.ScriptEngine), new SpotifyOverAppleScript(AppleScriptEvaluators.ScriptEngine), new ITunesOverAppleScript(AppleScriptEvaluators.OSAScript), new AppleMusicOverAppleScript(AppleScriptEvaluators.OSAScript), new SpotifyOverAppleScript(AppleScriptEvaluators.OSAScript));
 
             }
 
             return Arrays
-                    .asList(new ITunesOverAppleScriptOSAScript(), new MusicOverAppleScriptOSAScript(), new SpotifyOverAppleScriptOSAScript());
+                    .asList(new ITunesOverAppleScript(AppleScriptEvaluators.OSAScript), new AppleMusicOverAppleScript(AppleScriptEvaluators.OSAScript), new SpotifyOverAppleScript(AppleScriptEvaluators.OSAScript));
         }
 
         public Map<AtSoundtrackElement, String> getSoundtrack() {
@@ -137,4 +134,5 @@ public class AtSoundtrack {
             this.atomicBoolean.set(false);
         }
     }
+
 }

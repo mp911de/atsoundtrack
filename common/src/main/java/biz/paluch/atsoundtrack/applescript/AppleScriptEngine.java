@@ -23,7 +23,9 @@ import javax.script.ScriptEngineFactory;
  * @author Mark Paluch
  * @soundtrack Tranceformation Rewired by Diverted 116 (May 2015) - Ciacomix, Thomas Coastline
  */
+@SuppressWarnings("unchecked")
 public class AppleScriptEngine {
+
     private static Class<ScriptEngineFactory> factoryClass;
 
     static {
@@ -59,4 +61,5 @@ public class AppleScriptEngine {
             throw new IllegalStateException(e);
         }
     }
+
 }

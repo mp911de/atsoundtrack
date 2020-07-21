@@ -14,29 +14,37 @@
  * limitations under the License.
  */
 
-package biz.paluch.atsoundtrack.spotify;
+package biz.paluch.atsoundtrack.itunes;
 
-import biz.paluch.atsoundtrack.applescript.OSAScript;
+import biz.paluch.atsoundtrack.AtSoundtrackElement;
+import biz.paluch.atsoundtrack.SoundTrackProvider;
+import biz.paluch.atsoundtrack.applescript.ScriptEvaluator;
 import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
+import java.util.Map;
+
 /**
+ * Apple iTunes.
+ *
  * @author Mark Paluch
- * @since 17.05.15 21:49
- * @soundtrack Tranceformation Rewired by Diverted 116 (May 2015) - Ciacomix, Thomas Coastline
+ * @since 13.05.15 11:32
  */
-public class SpotifyOverAppleScriptOSAScript extends AbstractSpotifyAppleScriptProvider {
+public class ITunesOverAppleScript implements SoundTrackProvider {
 
-    public SpotifyOverAppleScriptOSAScript() {
+    private final AppleMusicDelegate delegate;
 
+    public ITunesOverAppleScript(ScriptEvaluator evaluator) {
+        this.delegate = new AppleMusicDelegate("iTunes", evaluator);
     }
 
     @Override
     public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
-        return atSoundtrackSettings.isSpotify() && OSAScript.isAvailable() && isRunning();
+        return atSoundtrackSettings.isITunes() && this.delegate.isRunning();
     }
 
-    protected String eval(String code) {
-        return OSAScript.eval(code);
+    @Override
+    public Map<AtSoundtrackElement, String> getSoundtrack() {
+        return this.delegate.getSoundtrack();
     }
 
 }

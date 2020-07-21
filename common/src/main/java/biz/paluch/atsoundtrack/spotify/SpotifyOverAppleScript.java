@@ -18,16 +18,26 @@ package biz.paluch.atsoundtrack.spotify;
 
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
 import biz.paluch.atsoundtrack.SoundTrackProvider;
+import biz.paluch.atsoundtrack.applescript.ScriptEvaluator;
+import biz.paluch.atsoundtrack.settings.AtSoundtrackSettings;
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
+ * Spotify.
+ *
  * @author Mark Paluch
  * @soundtrack Tranceformation Rewired by Diverted 116 (May 2015) - Ciacomix, Thomas Coastline
  */
-public abstract class AbstractSpotifyAppleScriptProvider implements SoundTrackProvider {
+public class SpotifyOverAppleScript implements SoundTrackProvider {
+
+    private final ScriptEvaluator evaluator;
+
+    public SpotifyOverAppleScript(ScriptEvaluator evaluator) {
+        this.evaluator = evaluator;
+    }
 
     @Override
     public Map<AtSoundtrackElement, String> getSoundtrack() {
@@ -59,7 +69,17 @@ public abstract class AbstractSpotifyAppleScriptProvider implements SoundTrackPr
         return names;
     }
 
+    @Override
+    public boolean isApplicable(AtSoundtrackSettings atSoundtrackSettings) {
+        return atSoundtrackSettings.isSpotify() && isRunning();
+    }
+
     protected boolean isRunning() {
+
+        if (!this.evaluator.isAvailable()) {
+            return false;
+        }
+
         String isRunning = eval("tell application \"System Events\" to (name of processes) contains \"Spotify\"");
 
         if ("false".equals("" + isRunning) || "0".equals("" + isRunning)) {
@@ -73,5 +93,8 @@ public abstract class AbstractSpotifyAppleScriptProvider implements SoundTrackPr
         return true;
     }
 
-    protected abstract String eval(String code);
+    protected String eval(String code) {
+        return this.evaluator.evaluate(code);
+    }
+
 }

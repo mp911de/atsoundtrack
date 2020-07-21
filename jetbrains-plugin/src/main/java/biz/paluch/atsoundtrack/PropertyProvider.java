@@ -31,7 +31,7 @@ import java.util.Properties;
  */
 public class PropertyProvider implements DefaultTemplatePropertiesProvider {
 
-    private AtSoundtrackSettings settings = PluginSettings.getInstance();
+    private final AtSoundtrackSettings settings = PluginSettings.getInstance();
 
     @Override
     public void fillProperties(PsiDirectory psiDirectory, Properties properties) {
