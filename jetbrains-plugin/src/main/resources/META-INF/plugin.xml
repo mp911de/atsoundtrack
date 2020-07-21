@@ -1,4 +1,4 @@
-<idea-plugin version="2">
+<idea-plugin>
     <id>biz.paluch.atsoundtrack</id>
     <name>AtSoundtrack</name>
     <version>${project.version}</version>
@@ -39,10 +39,11 @@
 </ul>
 
 
-<i>Compiled with Java 1.8 using 1.6 compatibility.</i>
+<i>Compiled with Java 1.8.</i>
     ]]></description>
 
     <change-notes><![CDATA[
+      <p><strong>Version 1.3</strong> Support for Apple Music on macOS Catalina.</p>
       <p><strong>Version 1.2.1</strong> Fix auto-completion with at-prefix for PhpStorm.</p>
       <p><strong>Version 1.2</strong> Added Configuration settings below <strong>Preferences/Editor/AtSoundtrack</strong>. Extended language support. Code completion is less greedy and more fun to use.</p>
       <p><strong>Version 1.1</strong> Support Spotify on MacOS X.</p>
