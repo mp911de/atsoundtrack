@@ -17,7 +17,6 @@
 package biz.paluch.atsoundtrack;
 
 import biz.paluch.atsoundtrack.settings.PluginSettings;
-
 import com.intellij.openapi.components.ApplicationComponent;
 
 /**
@@ -27,11 +26,6 @@ import com.intellij.openapi.components.ApplicationComponent;
 public class AtSoundtrackComponent extends AtSoundtrack implements ApplicationComponent {
 
     public AtSoundtrackComponent() {
-    }
-
-    public void initComponent() {
-
         setAtSoundtrackSettings(PluginSettings.getInstance());
-        super.initComponent();
     }
 }

@@ -17,59 +17,36 @@
 package biz.paluch.atsoundtrack.settings;
 
 import biz.paluch.atsoundtrack.AtSoundtrackElement;
-import biz.paluch.atsoundtrack.Messages;
 import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.components.*;
+import com.intellij.openapi.components.PersistentStateComponent;
+import com.intellij.openapi.components.State;
+import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
+import java.util.Map;
 
 /**
  * @author Mark Paluch
  */
 @State(name = "AtSoundtrackSettings", storages = {
-        @Storage(id = "AtSoundtrackSettings", file = "$APP_CONFIG$/atsoundtrack.xml") })
-
+        @Storage("$APP_CONFIG$/atsoundtrack.xml")})
 public class PluginSettings extends AtSoundtrackSettings
-        implements ApplicationComponent, PersistentStateComponent<AtSoundtrackSettings>, ExportableApplicationComponent {
+        implements PersistentStateComponent<AtSoundtrackSettings> {
 
     public static AtSoundtrackSettings getInstance() {
         return ApplicationManager.getApplication().getComponent(PluginSettings.class);
     }
 
-    @Override
-    public void initComponent() {
-
-        if (getParentheses().isEmpty()) {
-            getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.NONE);
-            getParentheses().put(AtSoundtrackElement.STREAM_TITLE, Parentheses.NONE);
-            getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.NONE);
-        }
+    public PluginSettings(long sleepMs, boolean iTunes, boolean spotify, boolean preferScriptEngine, Map<AtSoundtrackElement, Parentheses> parentheses, String content) {
+        super(sleepMs, iTunes, spotify, preferScriptEngine, parentheses, content);
     }
 
-    @Override
-    public void disposeComponent() {
+    public PluginSettings() {
 
-    }
-
-    @NotNull
-    @Override
-    public File[] getExportFiles() {
-        return new File[0];
-    }
-
-    @NotNull
-    @Override
-    public String getPresentableName() {
-        return Messages.message("plugin.name");
-    }
-
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return "AtSoundtrackSettings";
+        getParentheses().put(AtSoundtrackElement.TITLE, Parentheses.NONE);
+        getParentheses().put(AtSoundtrackElement.STREAM_TITLE, Parentheses.NONE);
+        getParentheses().put(AtSoundtrackElement.ARTIST, Parentheses.NONE);
     }
 
     @Nullable
